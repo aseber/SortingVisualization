@@ -10,11 +10,13 @@ public class ElementArray {
 	// Afterwards, the only methods you can do are get(index), swap(indexE1, indexE2), compare(indexE1, indexE2),
 	// getAccesses(), getCompares(), getSwaps(), getElements(), findClosestElement(xPos), and reset()
 	
-	public static final int RANDOM_ORDER = 0;
-	public static final int ALMOST_SORTED_ORDER = 1;
-	public static final int FEW_UNIQUE_ORDER = 2;
-	public static final int REVERSE_ORDER = 3;
-	public static final int FORWARD_ORDER = 4;
+	public static final int NO_CHANGE = 0;
+	public static final int RANDOM_ORDER = 1;
+	public static final int ALMOST_SORTED_ORDER = 2;
+	//public static final int FEW_UNIQUE_ORDER = 3;
+	
+	public static final int FORWARD_DIRECTION = 4;
+	public static final int REVERSE_DIRECTION = 5;
 	
 	private ArrayList<Element> elementArray = null;
 	private List<Element> elementArrayCopy = null;
@@ -22,17 +24,54 @@ public class ElementArray {
 	private long compares;
 	private long swaps;
 	
-	@SuppressWarnings("unchecked")
-	public ElementArray(int size, int flag) { // Do we ever set the element index correctly?
+	public ElementArray(int size, int direction, int order, double uniques) { // Do we ever set the element index correctly?
 		
 		elementArray = new ArrayList<Element>();
 		accesses = 0;
 		compares = 0;
 		swaps = 0;
 		
-		if (flag == RANDOM_ORDER) { // Randomize by taking the forward array and doing 10*size random swaps
+		ArrayList<Element> basicElementArray = new ArrayList<Element>();
+		
+		if (direction == FORWARD_DIRECTION) {
 			
-			ElementArray sortingElementArray = new ElementArray(size, FORWARD_ORDER);
+			for (int index = 0; index < VisualizationBase.SORT_COUNT; index++) {
+				
+				basicElementArray.add(new Element(index + 1, index)); // Create the forward Array, very fast and simple
+				
+			}
+			
+		}
+		
+		else if (direction == REVERSE_DIRECTION) {
+			
+			for (int index = 0; index < size; index++) {
+				
+				basicElementArray.add(new Element(index + 1, (size - 1) - index)); // Create the forward Array, very fast and simple
+				
+			}
+			
+		}
+		
+		else {
+			
+			throw new IllegalArgumentException("Invalid direction flag sent to Element Array: " + direction);
+			
+		}
+		
+		if (order == NO_CHANGE) {
+			
+			for (Element currentElement : basicElementArray) {
+				
+				elementArray.add(currentElement);
+				
+			}
+			
+		}
+
+		else if (order == RANDOM_ORDER) { // Randomize by taking the forward array and doing 10*size random swaps
+			
+			ElementArray sortingElementArray = new ElementArray(size, direction, NO_CHANGE, 1.0);
 			int RANDOMIZE_COUNTER = size * 10;
 			Random random = new Random();
 			
@@ -50,9 +89,9 @@ public class ElementArray {
 			
 		}
 		
-		else if (flag == ALMOST_SORTED_ORDER) { // Randomize by taking the forward array and doing size / 50 random swaps
+		else if (order == ALMOST_SORTED_ORDER) { // Randomize by taking the forward array and doing size / 50 random swaps
 			
-			ElementArray sortingElementArray = new ElementArray(size, FORWARD_ORDER);
+			ElementArray sortingElementArray = new ElementArray(size, direction, NO_CHANGE, 1.0);
 			int RANDOMIZE_COUNTER = (int) Math.ceil(size / 50);
 			Random random = new Random();
 			
@@ -70,9 +109,9 @@ public class ElementArray {
 			
 		}
 		
-		else if (flag == FEW_UNIQUE_ORDER) { // Unimplemented thus far
+		/*else if (order == FEW_UNIQUE_ORDER) { // Unimplemented thus far
 			
-			ElementArray sortingElementArray = new ElementArray(size, RANDOM_ORDER);
+			ElementArray sortingElementArray = new ElementArray(size, direction, RANDOM_ORDER, 1.0);
 			int RANDOMIZE_COUNTER = size * 10;
 			Random random = new Random();
 			
@@ -88,39 +127,11 @@ public class ElementArray {
 				
 			}
 			
-		}
-		
-		else if (flag == REVERSE_ORDER) {
-			
-			ElementArray sortingElementArray = new ElementArray(size, FORWARD_ORDER);
-			
-			for (int index = size - 1; index >= 0; index--) {
-				
-				System.out.println(index);
-				System.out.println(sortingElementArray.get(index).getValue());
-				elementArray.add(sortingElementArray.get(index));
-				
-			}
-			
-		}
-		
-		else if (flag == FORWARD_ORDER) {
-			
-			ArrayList<Element> basicElementArray = new ArrayList<Element>();
-			
-			for (int index = 0; index < VisualizationBase.SORT_COUNT; index++) {
-				
-				basicElementArray.add(new Element(index + 1, index)); // Create the forward Array, very fast and simple
-				
-			}
-			
-			elementArray = (ArrayList<Element>) basicElementArray.clone();
-			
-		}
+		}*/
 		
 		else {
 			
-			throw new IllegalArgumentException("Invalid flag sent to Element Array: " + flag);
+			throw new IllegalArgumentException("Invalid order flag sent to Element Array: " + order);
 			
 		}
 		

@@ -23,7 +23,7 @@ public class VisualizationBase {
 	protected static VisualizationWindow VISUALIZATION_WINDOW;
 	protected static VisualizationGUI VISUALIZATION_GUI;
 	public static int SLEEP_TIMER = 0;
-	public static int SORT_COUNT = 5000;
+	public static int SORT_COUNT = 100;
 	public static Dimension WINDOW_SIZE = new Dimension(700, 400);
 	public static String CURRENT_ALGORITHM = INSERTION;
 	
