@@ -10,72 +10,61 @@ public class ElementArray {
 	// Afterwards, the only methods you can do are get(index), swap(indexE1, indexE2), compare(indexE1, indexE2),
 	// getAccesses(), getCompares(), getSwaps(), getElements(), findClosestElement(xPos), and reset()
 	
-	public static final int NO_CHANGE = 0;
-	public static final int RANDOM_ORDER = 1;
-	public static final int ALMOST_SORTED_ORDER = 2;
-	public static final int FEW_UNIQUE_ORDER = 3;
-	public static final int REVERSE_ORDER = 4;
-	public static final int FORWARD_ORDER = 5;
+	public static final int RANDOM_ORDER = 0;
+	public static final int ALMOST_SORTED_ORDER = 1;
+	public static final int FEW_UNIQUE_ORDER = 2;
+	public static final int REVERSE_ORDER = 3;
+	public static final int FORWARD_ORDER = 4;
 	
-	private ArrayList<Element> elementArray = new ArrayList<Element>();
-	private ArrayList<Element> elementArrayCopy = new ArrayList<Element>();
+	private ArrayList<Element> elementArray = null;
+	private List<Element> elementArrayCopy = null;
 	private long accesses;
 	private long compares;
 	private long swaps;
 	
 	@SuppressWarnings("unchecked")
-	public ElementArray(ArrayList<Element> list, int flag) {
+	public ElementArray(int size, int flag) { // Do we ever set the element index correctly?
 		
+		elementArray = new ArrayList<Element>();
 		accesses = 0;
 		compares = 0;
 		swaps = 0;
 		
-		if (flag == NO_CHANGE) {
+		if (flag == RANDOM_ORDER) { // Randomize by taking the forward array and doing 10*size random swaps
 			
-			elementArray = (ArrayList<Element>) list.clone();
-			elementArrayCopy = (ArrayList<Element>) list.clone();
-			
-		}
-		
-		else if (flag == RANDOM_ORDER) {
-			
-			ElementArray sortingElementArray = new ElementArray(list, NO_CHANGE);
-			int count = VisualizationBase.SORT_COUNT;
-			int RANDOMIZE_COUNTER = count * 10;
+			ElementArray sortingElementArray = new ElementArray(size, FORWARD_ORDER);
+			int RANDOMIZE_COUNTER = size * 10;
 			Random random = new Random();
 			
 			for (int i = 0; i < RANDOMIZE_COUNTER; i++) {
 				
-				sortingElementArray.swap(random.nextInt(count), random.nextInt(count));
+				sortingElementArray.swap(random.nextInt(size), random.nextInt(size));
 				
 			}
 			
 			for (Element currentElement : sortingElementArray.getElements()) {
 				
 				elementArray.add(currentElement);
-				elementArrayCopy.add(currentElement);
 				
 			}
 			
 		}
 		
-		else if (flag == ALMOST_SORTED_ORDER) {
+		else if (flag == ALMOST_SORTED_ORDER) { // Randomize by taking the forward array and doing size / 50 random swaps
 			
-			ElementArray sortingElementArray = new ElementArray(list, NO_CHANGE);
-			int count = VisualizationBase.SORT_COUNT;
-			int RANDOMIZE_COUNTER = (int) Math.ceil(count / 50);
+			ElementArray sortingElementArray = new ElementArray(size, FORWARD_ORDER);
+			int RANDOMIZE_COUNTER = (int) Math.ceil(size / 50);
 			Random random = new Random();
 			
 			for (int i = 0; i < RANDOMIZE_COUNTER; i++) {
 				
-				sortingElementArray.swap(random.nextInt(count), random.nextInt(count));
+				sortingElementArray.swap(random.nextInt(size), random.nextInt(size));
 				
 			}
 			
 			for (Element currentElement : sortingElementArray.getElements()) {
 				
 				elementArray.add(currentElement);
-				elementArrayCopy.add(currentElement);
 				
 			}
 			
@@ -83,30 +72,49 @@ public class ElementArray {
 		
 		else if (flag == FEW_UNIQUE_ORDER) { // Unimplemented thus far
 			
-			elementArray = (ArrayList<Element>) list.clone();
-			elementArrayCopy = (ArrayList<Element>) list.clone();
+			ElementArray sortingElementArray = new ElementArray(size, RANDOM_ORDER);
+			int RANDOMIZE_COUNTER = size * 10;
+			Random random = new Random();
+			
+			for (int i = 0; i < RANDOMIZE_COUNTER; i++) {
+				
+				sortingElementArray.swap(random.nextInt(size), random.nextInt(size));
+				
+			}
+			
+			for (Element currentElement : sortingElementArray.getElements()) {
+				
+				elementArray.add(currentElement);
+				
+			}
 			
 		}
 		
-		else if (flag == REVERSE_ORDER) { // Unimplemented thus far
+		else if (flag == REVERSE_ORDER) {
 			
-			ArrayList<Element> sortingElementArray = (ArrayList<Element>) list.clone();
+			ElementArray sortingElementArray = new ElementArray(size, FORWARD_ORDER);
 			
-			
-			
-			elementArray = (ArrayList<Element>) sortingElementArray.clone();
-			elementArrayCopy = (ArrayList<Element>) list.clone();
+			for (int index = size - 1; index >= 0; index--) {
+				
+				System.out.println(index);
+				System.out.println(sortingElementArray.get(index).getValue());
+				elementArray.add(sortingElementArray.get(index));
+				
+			}
 			
 		}
 		
-		else if (flag == FORWARD_ORDER) { // Unimplemented thus far
+		else if (flag == FORWARD_ORDER) {
 			
-			ArrayList<Element> sortingElementArray = (ArrayList<Element>) list.clone();
+			ArrayList<Element> basicElementArray = new ArrayList<Element>();
 			
+			for (int index = 0; index < VisualizationBase.SORT_COUNT; index++) {
+				
+				basicElementArray.add(new Element(index + 1, index)); // Create the forward Array, very fast and simple
+				
+			}
 			
-			
-			elementArray = (ArrayList<Element>) sortingElementArray.clone();
-			elementArrayCopy = (ArrayList<Element>) list.clone();
+			elementArray = (ArrayList<Element>) basicElementArray.clone();
 			
 		}
 		
@@ -115,6 +123,8 @@ public class ElementArray {
 			throw new IllegalArgumentException("Invalid flag sent to Element Array: " + flag);
 			
 		}
+		
+		elementArrayCopy = Collections.unmodifiableList(elementArray);
 		
 	}
 	
@@ -179,17 +189,23 @@ public class ElementArray {
 	
 	public Element getClosestElement(int xPos) {
 		
-		int count = VisualizationBase.SORT_COUNT;
+		int count = elementArray.size();
 		double interval = (VisualizationBase.WINDOW_SIZE.getWidth() / ((double) VisualizationBase.SORT_COUNT));
 		int index = MyUtils.clampInt(count - 1, (int) Math.round(xPos / interval), 0);
 		return getWithoutIncrement(index);
 		
 	}
 	
-	@SuppressWarnings("unchecked")
-	public void reset() {
+	public void reset() {	// Resets the elementArray by first creating an empty arrayList and then getting all the values from the
+							// immutable list
 		
-		elementArray = (ArrayList<Element>) elementArrayCopy.clone();
+		elementArray = new ArrayList<Element>();
+		
+		for (Element currentElement : elementArrayCopy) {
+			
+			elementArray.add(currentElement);
+			
+		}
 		
 	}
 	

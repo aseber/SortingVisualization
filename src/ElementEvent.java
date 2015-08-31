@@ -6,7 +6,7 @@ import com.google.common.hash.HashCode;
 import com.google.common.hash.HashFunction;
 import com.google.common.hash.Hashing;
 
-public class RegionEvent implements Runnable { // class that executes the region flashing thing
+public class ElementEvent implements Runnable { // class that executes the region flashing thing
 	
 	private static Color transparant = new Color(255, 255, 255, 0);
 	private static AlphaComposite compositeApply = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f);
@@ -19,7 +19,7 @@ public class RegionEvent implements Runnable { // class that executes the region
 	private Color color = null;
 	private HashCode hash = null;
 	
-	public RegionEvent(Region inputRegion, Graphics inputG, Color inputColor) {
+	public ElementEvent(Region inputRegion, Graphics inputG, Color inputColor) {
 		
 		region = inputRegion;
 		g = inputG;
@@ -50,7 +50,7 @@ public class RegionEvent implements Runnable { // class that executes the region
 	public void run() {
 		
 		drawEnd();
-		RegionEventDriver.removeEvent(this);
+		ElementEventDriver.removeEvent(this);
 		
 	}
 	
@@ -76,7 +76,7 @@ public class RegionEvent implements Runnable { // class that executes the region
 	@Override
 	public boolean equals(Object o) {
 		
-		RegionEvent otherEvent = (RegionEvent) o;
+		ElementEvent otherEvent = (ElementEvent) o;
 		
 		if (region.getWindowPosition().equals(otherEvent.getRegion().getWindowPosition()) && color.equals(otherEvent.getColor())) {
 			

@@ -132,15 +132,7 @@ public class VisualizationWindow extends JPanel implements ComponentListener, Mo
 
 	public void createElementsArray() {
 		
-		ArrayList<Element> newElementArray = new ArrayList<Element>();
-		
-		for (int index = 0; index < VisualizationBase.SORT_COUNT; index++) {
-			
-			newElementArray.add(new Element(index + 1, index));
-			
-		}
-		
-		elementArray = new ElementArray(newElementArray, ElementArray.RANDOM_ORDER);
+		elementArray = new ElementArray(VisualizationBase.SORT_COUNT, ElementArray.RANDOM_ORDER);
 		repaintAllElements();
 		
 	}

@@ -3,19 +3,19 @@ import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-public class RegionEventDriver { // class that drives the region flashing thing
+public class ElementEventDriver { // class that drives the region flashing thing
 
 	private static ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(1);
 	@SuppressWarnings("rawtypes")
-	private static HashMap<RegionEvent, Future> eventMap = new HashMap<RegionEvent, Future>();
+	private static HashMap<ElementEvent, Future> eventMap = new HashMap<ElementEvent, Future>();
 
-	public RegionEventDriver() {
+	public ElementEventDriver() {
 		
 		executor.setMaximumPoolSize(5);
 		
 	}
 	
-	public void runEvent(RegionEvent event, int time) {
+	public void runEvent(ElementEvent event, int time) {
 				
 		synchronized(eventMap) {
 			
@@ -35,7 +35,7 @@ public class RegionEventDriver { // class that drives the region flashing thing
 		
 	}
 	
-	public static void removeEvent(RegionEvent event) {
+	public static void removeEvent(ElementEvent event) {
 		
 		synchronized(eventMap) {
 			
