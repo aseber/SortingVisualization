@@ -1,4 +1,5 @@
 import java.awt.Dialog.ModalityType;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -10,9 +11,10 @@ import com.jgoodies.forms.layout.FormLayout;
 public class VisualizationGUI extends JFrame {
 
 	protected VisualizationWindow mainWindow;
-	private JLabel openCounter = new JLabel("| Nodes Open: 0 ");
-	private JLabel closedCounter = new JLabel("| Nodes Closed: 0 ");
-	private JLabel pathLengthCounter = new JLabel("| Path Length: 0 ");
+	private JLabel accessCounter = new JLabel("| Accesses: 0 ");
+	private JLabel compareCounter = new JLabel("| Compares: 0 ");
+	private JLabel swapCounter = new JLabel("| Swaps: 0 ");
+	private JLabel runTimeCounter = new JLabel("| Run Time: 0 ms");
 	private JButton runButton = new JButton("Start Simulation");
 	
 	private static final long serialVersionUID = -6664286942946303464L;
@@ -20,43 +22,55 @@ public class VisualizationGUI extends JFrame {
 	VisualizationGUI() {
 		
 		initializeGUI();
-		VisualizationBase.VISUALIZATION_WINDOW.createBoxField();
+		VisualizationBase.VISUALIZATION_WINDOW.createElementsArray();
 		
 	}
 	
-	public void setOpenCounter(int var) {
+	public void setAccessCounter(int var) {
 		
-		openCounter.setText("| Nodes Open: " + var + " ");
-		
-	}
-	
-	public void resetOpenCounter() {
-		
-		setOpenCounter(0);
+		accessCounter.setText("| Accesses: " + var + " ");
 		
 	}
 	
-	public void setClosedCounter(int var) {
+	public void resetAccessCounter() {
 		
-		closedCounter.setText("| Nodes Closed: " + var + " ");
-		
-	}
-	
-	public void resetClosedCounter() {
-		
-		setClosedCounter(0);
+		setAccessCounter(0);
 		
 	}
 	
-	public void setPathLengthCounter(int var) {
+	public void setCompareCounter(int var) {
 		
-		pathLengthCounter.setText("| Path Length: " + var + " ");
+		compareCounter.setText("| Compares: " + var + " ");
 		
 	}
 	
-	public void resetPathLengthCounter() {
+	public void resetCompareCounter() {
 		
-		setPathLengthCounter(0);
+		setCompareCounter(0);
+		
+	}
+	
+	public void setSwapCounter(int var) {
+		
+		swapCounter.setText("| Swaps: " + var + " ");
+		
+	}
+	
+	public void resetSwapCounter() {
+		
+		setSwapCounter(0);
+		
+	}
+	
+	public void setRunTimeCounter(int var) {
+		
+		runTimeCounter.setText("| Run Time: " + var + " ms");
+		
+	}
+	
+	public void resetRunTimeCounter() {
+		
+		setRunTimeCounter(0);
 		
 	}
 	
@@ -81,15 +95,11 @@ public class VisualizationGUI extends JFrame {
 		VisualizationWindow mainWindow = new VisualizationWindow();
 		JMenuBar menuBar = new JMenuBar();
 		JMenu fileMenuGroup = new JMenu("File");
-		JMenu fileResetBoxes = new JMenu("Reset Boxes");
-		JMenuItem fileResetAllBoxes = new JMenuItem("Reset All Boxes");
-		JMenuItem fileResetSearchedBoxes = new JMenuItem("Reset Searched Boxes");
-		JMenuItem fileResetBarrierBoxes = new JMenuItem("Reset Barrier Boxes");
-		JMenuItem fileResetShortBoxes = new JMenuItem("Reset Shortest Path Boxes");
-		JMenuItem fileResetStartBox = new JMenuItem("Reset Start Box");
-		JMenuItem fileResetEndBox = new JMenuItem("Reset End Box");
-		JMenuItem fileResetQueuedBoxes = new JMenuItem("Reset Queued Boxes");
-		JMenuItem fileResetSomeBoxes = new JMenuItem("Reset Boxes...");
+		JMenu fileResetArray = new JMenu("Reset Array");
+		JMenuItem fileResetRandom = new JMenuItem("Random");
+		JMenuItem fileResetAlmostSorted = new JMenuItem("Almost Sorted");
+		JMenuItem fileResetFewUnique = new JMenuItem("Few Unique");
+		JMenuItem fileResetReverse = new JMenuItem("Reverse");
 		JMenuItem fileExit = new JMenuItem("Exit program");
 		JMenu settingsMenuGroup = new JMenu("Settings");
 		JMenuItem settingsChangeAlgorithm = new JMenuItem("Modify Algorithm");
@@ -108,83 +118,43 @@ public class VisualizationGUI extends JFrame {
 		
 		add(menuBar, CC.xywh(1, 1, 3, 1, CC.FILL, CC.FILL));
 			menuBar.add(fileMenuGroup);
-				fileMenuGroup.add(fileResetBoxes);
-					fileResetBoxes.add(fileResetAllBoxes);
-					fileResetBoxes.addActionListener(new ActionListener() {
+				fileMenuGroup.add(fileResetArray);
+					fileResetArray.add(fileResetRandom);
+					fileResetRandom.addActionListener(new ActionListener() {
 
 						public void actionPerformed(ActionEvent arg0) {
 						
-							fileResetAllBoxes();
+							fileResetRandom();
 							
 						}
 						
 					});
-					fileResetBoxes.add(fileResetSearchedBoxes);
-					fileResetSearchedBoxes.addActionListener(new ActionListener() {
+					fileResetArray.add(fileResetAlmostSorted);
+					fileResetAlmostSorted.addActionListener(new ActionListener() {
 
 						public void actionPerformed(ActionEvent arg0) {
 						
-							fileResetSearchedBoxes();
+							fileResetAlmostSorted();
 							
 						}
 						
 					});
-					fileResetBoxes.add(fileResetBarrierBoxes);
-					fileResetBarrierBoxes.addActionListener(new ActionListener() {
+					fileResetArray.add(fileResetFewUnique);
+					fileResetFewUnique.addActionListener(new ActionListener() {
 
 						public void actionPerformed(ActionEvent arg0) {
 						
-							fileResetBarrierBoxes();
+							fileResetFewUnique();
 							
 						}
 						
 					});
-					fileResetBoxes.add(fileResetShortBoxes);
-					fileResetShortBoxes.addActionListener(new ActionListener() {
+					fileResetArray.add(fileResetReverse);
+					fileResetReverse.addActionListener(new ActionListener() {
 
 						public void actionPerformed(ActionEvent arg0) {
 						
-							fileResetShortBoxes();
-							
-						}
-						
-					});
-					fileResetBoxes.add(fileResetStartBox);
-					fileResetStartBox.addActionListener(new ActionListener() {
-
-						public void actionPerformed(ActionEvent arg0) {
-						
-							fileResetStartBox();
-							
-						}
-						
-					});
-					fileResetBoxes.add(fileResetEndBox);
-					fileResetEndBox.addActionListener(new ActionListener() {
-
-						public void actionPerformed(ActionEvent arg0) {
-						
-							fileResetEndBox();
-							
-						}
-						
-					});
-					fileResetBoxes.add(fileResetQueuedBoxes);
-					fileResetQueuedBoxes.addActionListener(new ActionListener() {
-
-						public void actionPerformed(ActionEvent arg0) {
-						
-							fileResetQueuedBoxes();
-							
-						}
-						
-					});
-					fileResetBoxes.add(fileResetSomeBoxes);
-					fileResetSomeBoxes.addActionListener(new ActionListener() {
-
-						public void actionPerformed(ActionEvent arg0) {
-						
-							fileResetSomeBoxes();
+							fileResetReverse();
 							
 						}
 						
@@ -232,9 +202,10 @@ public class VisualizationGUI extends JFrame {
 					
 				});
 				
-			menuBar.add(openCounter);
-			menuBar.add(closedCounter);
-			menuBar.add(pathLengthCounter);
+			menuBar.add(accessCounter);
+			menuBar.add(compareCounter);
+			menuBar.add(swapCounter);
+			menuBar.add(runTimeCounter);
 				
 		add(mainWindow, CC.xywh(1, 2, 3, 1, CC.FILL, CC.FILL));
 			
@@ -242,59 +213,32 @@ public class VisualizationGUI extends JFrame {
 		
 		pack();
 		
-		int sizeX = (int) (VisualizationBase.ROW_COUNT*VisualizationBase.size.getWidth() + 17);
-		int sizeY = (int) (VisualizationBase.COLUMN_COUNT*VisualizationBase.size.getHeight() + 95);
-		setSize(sizeX, sizeY);
+		Dimension size = new Dimension(VisualizationBase.WINDOW_SIZE.width + 17, VisualizationBase.WINDOW_SIZE.height + 94);
+		setSize(size);
 		
 	}
 	
-	private void fileResetAllBoxes() {
+	private void fileResetRandom() {
 		
-		VisualizationBase.VISUALIZATION_WINDOW.resetBoxField();
 		
-	}
-	
-	private void fileResetSearchedBoxes() {
-		
-		VisualizationBase.VISUALIZATION_WINDOW.clearBoxFieldFlag(Box.BOX_SEARCHED_FLAG);
 		
 	}
 	
-	private void fileResetBarrierBoxes() {
+	private void fileResetAlmostSorted() {
 			
-		VisualizationBase.VISUALIZATION_WINDOW.clearBoxFieldFlag(Box.BOX_BARRIER_FLAG);
+
 			
 	}
 	
-	private void fileResetShortBoxes() {
+	private void fileResetFewUnique() {
 		
-		VisualizationBase.VISUALIZATION_WINDOW.clearBoxFieldFlag(Box.BOX_SHORTEST_PATH_FLAG);
-		
-	}
-	
-	private void fileResetStartBox() {
-		
-		VisualizationBase.VISUALIZATION_WINDOW.clearBoxFieldFlag(Box.BOX_START_FLAG);
+
 		
 	}
 	
-	private void fileResetEndBox() {
+	private void fileResetReverse() {
 		
-		VisualizationBase.VISUALIZATION_WINDOW.clearBoxFieldFlag(Box.BOX_END_FLAG);
-		
-	}
-	
-	private void fileResetQueuedBoxes() {
-		
-		VisualizationBase.VISUALIZATION_WINDOW.clearBoxFieldFlag(Box.BOX_QUEUED_FLAG);
-		
-	}
-	
-	private void fileResetSomeBoxes() {
-		
-		ClearBoxDialog BoxGUI = new ClearBoxDialog(this);
-		BoxGUI.setModalityType(ModalityType.APPLICATION_MODAL);
-		BoxGUI.setVisible(true);
+
 		
 	}
 	

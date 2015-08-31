@@ -22,17 +22,16 @@ public class VisualizationBase {
 	
 	protected static VisualizationWindow VISUALIZATION_WINDOW;
 	protected static VisualizationGUI VISUALIZATION_GUI;
-	public static int sleepTimer = 0;
-	public static int SORT_COUNT = 100;
-	public static int size = 5;
-	public static String CURRENT_ALGORITHM = SELECTION;
+	public static int SLEEP_TIMER = 0;
+	public static int SORT_COUNT = 5000;
+	public static Dimension WINDOW_SIZE = new Dimension(700, 400);
+	public static String CURRENT_ALGORITHM = INSERTION;
 	
 	public static void main(String[] args) {
 		
 		VISUALIZATION_GUI = new VisualizationGUI();
 		VISUALIZATION_GUI.setTitle("Sorting Visualization");
 		VISUALIZATION_GUI.setVisible(true);
-		//VISUALIZATION_GUI.setResizable(false);
 		VISUALIZATION_GUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	}
