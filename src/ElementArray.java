@@ -10,13 +10,16 @@ public class ElementArray {
 	// Afterwards, the only methods you can do are get(index), swap(indexE1, indexE2), compare(indexE1, indexE2),
 	// getAccesses(), getCompares(), getSwaps(), getElements(), findClosestElement(xPos), and reset()
 	
-	public static final int NO_CHANGE = 0;
-	public static final int RANDOM_ORDER = 1;
-	public static final int ALMOST_SORTED_ORDER = 2;
-	//public static final int FEW_UNIQUE_ORDER = 3;
+	public static final int FORWARD_DIRECTION = 0;
+	public static final int REVERSE_DIRECTION = 1;
 	
-	public static final int FORWARD_DIRECTION = 4;
-	public static final int REVERSE_DIRECTION = 5;
+	public static final int SORTED_ORDER = 2;
+	public static final int RANDOM_ORDER = 3;
+	public static final int ALMOST_SORTED_ORDER = 4;
+	
+	public static final double ALL_UNIQUE = 1.0;
+	public static final double FEW_UNIQUE = 0.75;
+	private static final double NO_UNIQUE = 0.0;
 	
 	private ArrayList<Element> elementArray = null;
 	private List<Element> elementArrayCopy = null;
@@ -33,11 +36,34 @@ public class ElementArray {
 		
 		ArrayList<Element> basicElementArray = new ArrayList<Element>();
 		
+		if (uniques <= NO_UNIQUE || uniques > ALL_UNIQUE) {
+			
+			throw new IllegalArgumentException("Invalid uniques passed to ElementArray constructor: " + uniques);
+			
+		}
+		
+		int intervalIncrement = 0;
+		
+		if (uniques == ALL_UNIQUE) {
+			
+			intervalIncrement = 1;
+			
+		}
+		
+		else {
+		
+			intervalIncrement = (int) Math.ceil(size * (1.0 - uniques));
+			
+		}
+		
 		if (direction == FORWARD_DIRECTION) {
 			
-			for (int index = 0; index < VisualizationBase.SORT_COUNT; index++) {
+			for (int index = 0; index < size; index++) {
 				
-				basicElementArray.add(new Element(index + 1, index)); // Create the forward Array, very fast and simple
+				int value = (int) Math.floor((index) / intervalIncrement) * intervalIncrement;
+				//System.out.println("Value: " + value);
+				
+				basicElementArray.add(new Element(value, index)); // Creates the forward Array, very fast and simple
 				
 			}
 			
@@ -47,7 +73,9 @@ public class ElementArray {
 			
 			for (int index = 0; index < size; index++) {
 				
-				basicElementArray.add(new Element(index + 1, (size - 1) - index)); // Create the forward Array, very fast and simple
+				int value = index + 1;
+				
+				basicElementArray.add(new Element(value, (size - 1) - index)); // Creates the reverse Array, very fast and simple
 				
 			}
 			
@@ -55,11 +83,11 @@ public class ElementArray {
 		
 		else {
 			
-			throw new IllegalArgumentException("Invalid direction flag sent to Element Array: " + direction);
+			throw new IllegalArgumentException("Invalid direction flag passed to ElementArray constructor: " + direction);
 			
 		}
 		
-		if (order == NO_CHANGE) {
+		if (order == SORTED_ORDER) {
 			
 			for (Element currentElement : basicElementArray) {
 				
@@ -71,7 +99,7 @@ public class ElementArray {
 
 		else if (order == RANDOM_ORDER) { // Randomize by taking the forward array and doing 10*size random swaps
 			
-			ElementArray sortingElementArray = new ElementArray(size, direction, NO_CHANGE, 1.0);
+			ElementArray sortingElementArray = new ElementArray(size, direction, SORTED_ORDER, 1.0);
 			int RANDOMIZE_COUNTER = size * 10;
 			Random random = new Random();
 			
@@ -91,7 +119,7 @@ public class ElementArray {
 		
 		else if (order == ALMOST_SORTED_ORDER) { // Randomize by taking the forward array and doing size / 50 random swaps
 			
-			ElementArray sortingElementArray = new ElementArray(size, direction, NO_CHANGE, 1.0);
+			ElementArray sortingElementArray = new ElementArray(size, direction, SORTED_ORDER, 1.0);
 			int RANDOMIZE_COUNTER = (int) Math.ceil(size / 50);
 			Random random = new Random();
 			
@@ -109,31 +137,27 @@ public class ElementArray {
 			
 		}
 		
-		/*else if (order == FEW_UNIQUE_ORDER) { // Unimplemented thus far
-			
-			ElementArray sortingElementArray = new ElementArray(size, direction, RANDOM_ORDER, 1.0);
-			int RANDOMIZE_COUNTER = size * 10;
-			Random random = new Random();
-			
-			for (int i = 0; i < RANDOMIZE_COUNTER; i++) {
-				
-				sortingElementArray.swap(random.nextInt(size), random.nextInt(size));
-				
-			}
-			
-			for (Element currentElement : sortingElementArray.getElements()) {
-				
-				elementArray.add(currentElement);
-				
-			}
-			
-		}*/
-		
 		else {
 			
-			throw new IllegalArgumentException("Invalid order flag sent to Element Array: " + order);
+			throw new IllegalArgumentException("Invalid order flag passed to ElementArray constructor: " + order);
 			
 		}
+		
+		/*ElementArray sortingElementArray = new ElementArray(size, direction, RANDOM_ORDER, 1.0);
+		int RANDOMIZE_COUNTER = size * 10;
+		Random random = new Random();
+		
+		for (int i = 0; i < RANDOMIZE_COUNTER; i++) {
+			
+			sortingElementArray.swap(random.nextInt(size), random.nextInt(size));
+			
+		}
+		
+		for (Element currentElement : sortingElementArray.getElements()) {
+			
+			elementArray.add(currentElement);
+			
+		}*/
 		
 		elementArrayCopy = Collections.unmodifiableList(elementArray);
 		
@@ -201,7 +225,7 @@ public class ElementArray {
 	public Element getClosestElement(int xPos) {
 		
 		int count = elementArray.size();
-		double interval = (VisualizationBase.WINDOW_SIZE.getWidth() / ((double) VisualizationBase.SORT_COUNT));
+		double interval = (VisualizationBase.WINDOW_SIZE.getWidth() / ((double) elementArray.size()));
 		int index = MyUtils.clampInt(count - 1, (int) Math.round(xPos / interval), 0);
 		return getWithoutIncrement(index);
 		

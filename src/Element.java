@@ -29,7 +29,7 @@ public class Element {
 		int x = (int) Math.round(width * ((double) index / (count_double)));
 		int y = ((int) total_height) - (int) Math.round(reduced_height * ((double) value / count_double));
 		int deltaX = (int) Math.round(width / count_double) + 1;
-		int deltaY = (int) total_height;
+		int deltaY = (int) total_height; // - y - 15; // Fix this!
 		
 		g.setColor(Color.WHITE);
 		g.fillRect(x, y, deltaX, deltaY);
@@ -39,6 +39,12 @@ public class Element {
 	public int getValue() {
 		
 		return value;
+		
+	}
+	
+	public void setValue(int newValue) {
+		
+		value = newValue;
 		
 	}
 	
