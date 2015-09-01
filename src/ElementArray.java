@@ -61,7 +61,6 @@ public class ElementArray {
 			for (int index = 0; index < size; index++) {
 				
 				int value = (int) Math.floor((index) / intervalIncrement) * intervalIncrement;
-				//System.out.println("Value: " + value);
 				
 				basicElementArray.add(new Element(value, index)); // Creates the forward Array, very fast and simple
 				
@@ -73,7 +72,7 @@ public class ElementArray {
 			
 			for (int index = 0; index < size; index++) {
 				
-				int value = index + 1;
+				int value = (int) Math.floor((index) / intervalIncrement) * intervalIncrement;
 				
 				basicElementArray.add(new Element(value, (size - 1) - index)); // Creates the reverse Array, very fast and simple
 				
@@ -99,7 +98,7 @@ public class ElementArray {
 
 		else if (order == RANDOM_ORDER) { // Randomize by taking the forward array and doing 10*size random swaps
 			
-			ElementArray sortingElementArray = new ElementArray(size, direction, SORTED_ORDER, 1.0);
+			ElementArray sortingElementArray = new ElementArray(size, direction, SORTED_ORDER, uniques);
 			int RANDOMIZE_COUNTER = size * 10;
 			Random random = new Random();
 			
@@ -119,7 +118,7 @@ public class ElementArray {
 		
 		else if (order == ALMOST_SORTED_ORDER) { // Randomize by taking the forward array and doing size / 50 random swaps
 			
-			ElementArray sortingElementArray = new ElementArray(size, direction, SORTED_ORDER, 1.0);
+			ElementArray sortingElementArray = new ElementArray(size, direction, SORTED_ORDER, uniques);
 			int RANDOMIZE_COUNTER = (int) Math.ceil(size / 50);
 			Random random = new Random();
 			
@@ -142,22 +141,6 @@ public class ElementArray {
 			throw new IllegalArgumentException("Invalid order flag passed to ElementArray constructor: " + order);
 			
 		}
-		
-		/*ElementArray sortingElementArray = new ElementArray(size, direction, RANDOM_ORDER, 1.0);
-		int RANDOMIZE_COUNTER = size * 10;
-		Random random = new Random();
-		
-		for (int i = 0; i < RANDOMIZE_COUNTER; i++) {
-			
-			sortingElementArray.swap(random.nextInt(size), random.nextInt(size));
-			
-		}
-		
-		for (Element currentElement : sortingElementArray.getElements()) {
-			
-			elementArray.add(currentElement);
-			
-		}*/
 		
 		elementArrayCopy = Collections.unmodifiableList(elementArray);
 		

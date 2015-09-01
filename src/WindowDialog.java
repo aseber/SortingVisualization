@@ -60,7 +60,7 @@ public class WindowDialog extends JDialog {
 		
 		contentPanel.setLayout(new FormLayout("3px, 150px, 5px, 100px, 5px", "5px, 25px, 5px, 25px, 5px, 50px"));
 		
-		boxCountLabel.setText("Box Row/Column Count");
+		boxCountLabel.setText("Window X Size");
 		contentPanel.add(boxCountLabel, CC.xywh(2, 2, 1, 1));
 		
 		boxCountField.setText(Integer.toString(VisualizationBase.ROW_COUNT));

@@ -16,20 +16,24 @@ public class Element {
 		
 		value = inputValue;
 		index = arrayIndex;
+		VisualizationBase.VISUALIZATION_WINDOW.repaint(this);
 		
 	}
 	
 	public void drawElement(Graphics g) {
 		
+		int topOffset = 20;
+		int bottomOffset = 20;
+		
 		double width = VisualizationBase.WINDOW_SIZE.getWidth();
 		double total_height = VisualizationBase.WINDOW_SIZE.getHeight();
-		double reduced_height = VisualizationBase.WINDOW_SIZE.getHeight() - 20;
+		double reduced_height = VisualizationBase.WINDOW_SIZE.getHeight() - topOffset - bottomOffset;
 		double count_double = (double) VisualizationBase.SORT_COUNT;
 		
 		int x = (int) Math.round(width * ((double) index / (count_double)));
-		int y = ((int) total_height) - (int) Math.round(reduced_height * ((double) value / count_double));
+		int y = ((int) total_height - topOffset) - (int) Math.round(reduced_height * ((double) value / count_double));
 		int deltaX = (int) Math.round(width / count_double) + 1;
-		int deltaY = (int) total_height; // - y - 15; // Fix this!
+		int deltaY = (int) total_height - y - bottomOffset;
 		
 		g.setColor(Color.WHITE);
 		g.fillRect(x, y, deltaX, deltaY);

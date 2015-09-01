@@ -6,7 +6,6 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
@@ -51,40 +50,49 @@ public class VisualizationWindow extends JPanel implements ComponentListener, Mo
 		
 		g.drawImage(image, 0, 0, this.getBackground(), null);
 		
-		g.setColor(Color.BLACK);
+		int windowSizeX = VisualizationBase.WINDOW_SIZE.width;
+		int windowSizeY = VisualizationBase.WINDOW_SIZE.height;
+			
+		g.setColor(new Color(200, 200, 200, 100));
+		g.fillRect(0, windowSizeY - 20, windowSizeX, 20);
+		
+		g.setColor(Color.WHITE);
+
+		String display1 = "Algorithm: " + VisualizationBase.CURRENT_ALGORITHM;
+		int offsetX = 5;
+		g.drawString(display1, offsetX, 12);
+		
+		String display2 = "Data Size: " + VisualizationBase.SORT_COUNT;
+		offsetX += g.getFontMetrics().stringWidth(display1) + 5;
+		g.drawString(display2, offsetX, 12);
 		
 		if (drawDebugInformation) {
-
-			int windowSizeX = VisualizationBase.WINDOW_SIZE.width;
-			int windowSizeY = VisualizationBase.WINDOW_SIZE.height;
-			
-			g.setColor(Color.RED);
-			g.drawLine(mouseX, 0, mouseX, windowSizeY);
-			g.drawLine(0, mouseY, windowSizeX, mouseY);
-			g.setColor(Color.WHITE);
-
-			int offsetX = 5;
-			String display1 = "Mouse: [" + mouseX + ", " + mouseY + "]";
-			
-			g.drawString(display1, offsetX, 12);
+	
+			String display3 = "Mouse: [" + mouseX + ", " + mouseY + "]";
+			offsetX += g.getFontMetrics().stringWidth(display2) + 5;
+			g.drawString(display3, offsetX, 12);
 			
 			if (elementArray != null) {
 				
 				Element curElement = elementArray.getClosestElement(mouseX);
 
-				String display2 = "Index: " + curElement.getIndex();
-				String display3 = "Value: " + curElement.getValue();
-				
-				offsetX += g.getFontMetrics().stringWidth(display1) + 5;
-				g.drawString(display2, offsetX, 12);
-				offsetX += g.getFontMetrics().stringWidth(display2) + 5;
-				g.drawString(display3, offsetX, 12);
+				String display4 = "Index: " + curElement.getIndex();
+				offsetX += g.getFontMetrics().stringWidth(display3) + 5;
+				g.drawString(display4, offsetX, 12);
+				String display5 = "Value: " + curElement.getValue();
+				offsetX += g.getFontMetrics().stringWidth(display4) + 5;
+				g.drawString(display5, offsetX, 12);
 				
 			}
+			
+			g.setColor(Color.RED);
+			g.drawLine(mouseX, 0, mouseX, windowSizeY);
+			g.drawLine(0, mouseY, windowSizeX, mouseY);
+			g.setColor(Color.WHITE);
 		
 		}
 		
-		repaint();
+		//repaint();
 		
 	}
 	
@@ -162,6 +170,7 @@ public class VisualizationWindow extends JPanel implements ComponentListener, Mo
 		int mouseX = e.getX();
 		int mouseY = e.getY();
 		mouse.setLocation(MyUtils.clampInt(sizeX, mouseX, 0), MyUtils.clampInt(sizeY, mouseY, 0));
+		repaint();
 		
 	}
 	
@@ -172,6 +181,7 @@ public class VisualizationWindow extends JPanel implements ComponentListener, Mo
 		int mouseX = e.getX();
 		int mouseY = e.getY();
 		mouse.setLocation(MyUtils.clampInt(sizeX, mouseX, 0), MyUtils.clampInt(sizeY, mouseY, 0));
+		repaint();
 		
 	}
 	
