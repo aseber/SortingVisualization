@@ -1,49 +1,42 @@
-import java.awt.AlphaComposite;
+//import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import com.google.common.hash.HashCode;
+//import com.google.common.hash.HashCode;
 import com.google.common.hash.HashFunction;
 import com.google.common.hash.Hashing;
 
 public class ElementEvent implements Runnable { // class that executes the region flashing thing
 	
-	private static Color transparant = new Color(255, 255, 255, 0);
-	private static AlphaComposite compositeApply = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f);
-	private static AlphaComposite compositeRemove = AlphaComposite.getInstance(AlphaComposite.CLEAR, 1f);
+	//private static Color transparant = new Color(255, 255, 255, 0);
+	//private static AlphaComposite compositeApply = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f);
+	//private static AlphaComposite compositeRemove = AlphaComposite.getInstance(AlphaComposite.CLEAR, 1f);
 	
 	HashFunction hf = Hashing.md5();
 	
-	private Region region = null;
+	private Element element = null;
 	private Graphics g = null;
 	private Color color = null;
-	private HashCode hash = null;
 	
-	public ElementEvent(Region inputRegion, Graphics inputG, Color inputColor) {
+	public ElementEvent(Element inputElement, Graphics inputG, Color inputColor) {
 		
-		region = inputRegion;
+		element = inputElement;
 		g = inputG;
 		color = inputColor;
-		hash = hf.newHasher()
-				.putInt(inputRegion.getWindowPosition().x)
-				.putInt(inputRegion.getWindowPosition().y)
-				.putInt(inputColor.getRed())
-				.putInt(inputColor.getGreen())
-				.putInt(inputColor.getBlue())
-				.hash();
 		
 	}
 	
 	public void drawBeginning() {
 		
-		region.fillRegionXYDebugColor(g, color, compositeApply);
+		element.drawElement(g, color);
+		VisualizationBase.VISUALIZATION_WINDOW.repaint(element);
 		
 	}
 	
 	private void drawEnd() {
 		
-		region.fillRegionXYDebugColor(g, transparant, compositeRemove);
-		VisualizationBase.VISUALIZATION_WINDOW.repaint();
+		element.drawElement(g, Color.WHITE);
+		VisualizationBase.VISUALIZATION_WINDOW.repaint(element);
 		
 	}
 	
@@ -54,9 +47,9 @@ public class ElementEvent implements Runnable { // class that executes the regio
 		
 	}
 	
-	public Region getRegion() {
+	public Element getElement() {
 		
-		return region;
+		return element;
 		
 	}
 	
@@ -69,7 +62,7 @@ public class ElementEvent implements Runnable { // class that executes the regio
 	@Override
 	public int hashCode() {
 		
-		return hash.asInt();
+		return element.getIndex();
 		
 	}
 	
@@ -78,7 +71,7 @@ public class ElementEvent implements Runnable { // class that executes the regio
 		
 		ElementEvent otherEvent = (ElementEvent) o;
 		
-		if (region.getWindowPosition().equals(otherEvent.getRegion().getWindowPosition()) && color.equals(otherEvent.getColor())) {
+		if (element.getIndex() == otherEvent.getElement().getIndex()) {
 			
 			return true;
 			

@@ -7,8 +7,7 @@ public class ElementArray {
 	
 	// ElementArrays are an immutable data type that contains an ArrayList of elements.
 	// The constructor should add all values to the array
-	// Afterwards, the only methods you can do are get(index), swap(indexE1, indexE2), compare(indexE1, indexE2),
-	// getAccesses(), getCompares(), getSwaps(), getElements(), findClosestElement(xPos), size(), and reset()
+	// and subsequent functions can modify the elementArray list, but not the copy
 	
 	public static final int FORWARD_DIRECTION = 0;
 	public static final int REVERSE_DIRECTION = 1;
@@ -150,7 +149,9 @@ public class ElementArray {
 	public Element get(int index) {
 		
 		accesses++;
-		return elementArray.get(index);
+		Element element = elementArray.get(index);
+		//VisualizationBase.VISUALIZATION_WINDOW.registerEvent(element, Color.RED, 5000); // Slow
+		return element;
 		
 	}
 	
@@ -185,6 +186,8 @@ public class ElementArray {
 	public int compare(Element E1, Element E2) {
 		
 		compares++;
+		//VisualizationBase.VISUALIZATION_WINDOW.registerEvent(E1, Color.GREEN, 5000);
+		//VisualizationBase.VISUALIZATION_WINDOW.registerEvent(E2, Color.GREEN, 5000);
 		return E1.compare(E2);
 		
 	}
@@ -203,6 +206,7 @@ public class ElementArray {
 		sets++;
 		E1.setIndex(index);
 		elementArray.set(index, E1);
+		//VisualizationBase.VISUALIZATION_WINDOW.registerEvent(E1, Color.BLUE, 5000);
 		VisualizationBase.VISUALIZATION_WINDOW.repaint(E1);
 		
 	}
@@ -256,6 +260,7 @@ public class ElementArray {
 		
 		for (Element currentElement : elementArrayCopy) {
 			
+			System.out.println(currentElement.getIndex());
 			elementArray.add(currentElement);
 			
 		}

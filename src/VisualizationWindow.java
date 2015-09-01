@@ -15,10 +15,11 @@ public class VisualizationWindow extends JPanel implements ComponentListener, Mo
 	 * 
 	 */
 	private static final long serialVersionUID = 3756454707674613931L;
-	Point mouse = new Point();
-	boolean drawDebugInformation = false;
-	ElementArray elementArray = null;
-	BufferedImage image;
+	private Point mouse = new Point();
+	private boolean drawDebugInformation = false;
+	private ElementArray elementArray = null;
+	private BufferedImage image;
+	private ElementEventDriver eventDriver = new ElementEventDriver();
 	
 	public VisualizationWindow() {
 		
@@ -98,7 +99,7 @@ public class VisualizationWindow extends JPanel implements ComponentListener, Mo
 	
 	public void repaint(Element element) {
 
-		element.drawElement(image.getGraphics());
+		element.drawElement(image.getGraphics(), Color.WHITE);
 		repaint();
 		
 	}
@@ -113,7 +114,7 @@ public class VisualizationWindow extends JPanel implements ComponentListener, Mo
 		
 		for (Element element : elementArray.getElements()) {
 			
-			element.drawElement(image.getGraphics());
+			element.drawElement(image.getGraphics(), Color.WHITE);
 			
 		}
 		
@@ -121,26 +122,15 @@ public class VisualizationWindow extends JPanel implements ComponentListener, Mo
 		
 	}
 	
-	public boolean isMouseInApplet() {
-
-		int mouseX = mouse.x;
-		int mouseY = mouse.y;
-		int sizeX = VisualizationBase.WINDOW_SIZE.width;
-		int sizeY = VisualizationBase.WINDOW_SIZE.height;
+	public void registerEvent(Element element, Color color, int time) {
 		
-		if (mouseX >= 0 && mouseY >= 0 && mouseX <= sizeX && mouseY <= sizeY) {
+		eventDriver.registerEvent(new ElementEvent(element, image.getGraphics(), color), time);
 		
-			return true;
-		
-		}
-	
-		return false;
-	
 	}
 
 	public void createElementsArray() {
 		
-		elementArray = new ElementArray(VisualizationBase.SORT_COUNT, ElementArray.REVERSE_DIRECTION, ElementArray.RANDOM_ORDER, ElementArray.FEW_UNIQUE);
+		elementArray = new ElementArray(VisualizationBase.SORT_COUNT, VisualizationBase.DIRECTION, VisualizationBase.ORDER, VisualizationBase.UNIQUENESS);
 		repaintAllElements();
 		
 	}

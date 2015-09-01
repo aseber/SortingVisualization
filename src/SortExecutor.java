@@ -1,7 +1,3 @@
-import java.awt.Color;
-import java.util.HashSet;
-
-
 public class SortExecutor implements Runnable { // Simple class that allows me to move the processing to a new thread so the UI doesn't lag.
 													// Also lets me test the algorithms speed
 	

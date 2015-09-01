@@ -11,8 +11,8 @@ public class VisualizationBase {
 	public static final String HEAP = "HEAP";
 	public static final String RADIXLSD = "RADIXLSD";
 	public static final String RADIXMSD = "RADIXMSD";
-	public static final String STDSORT = "STDSORT";
-	public static final String STDSTABLESORT = "STDSTABLESORT";
+	public static final String STDSORT = "STD::SORT";
+	public static final String STDSTABLESORT = "STD::STABLESORT";
 	public static final String SHELL = "SHELL";
 	public static final String BUBBLE = "BUBBLE";
 	public static final String SHAKER = "SHAKER";
@@ -26,6 +26,9 @@ public class VisualizationBase {
 	public static int SORT_COUNT = 100;
 	public static Dimension WINDOW_SIZE = new Dimension(700, 400);
 	public static String CURRENT_ALGORITHM = INSERTION;
+	public static int DIRECTION = ElementArray.FORWARD_DIRECTION;
+	public static int ORDER = ElementArray.RANDOM_ORDER;
+	public static double UNIQUENESS = ElementArray.ALL_UNIQUE;
 	
 	public static void main(String[] args) {
 		

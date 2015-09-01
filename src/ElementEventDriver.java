@@ -15,7 +15,7 @@ public class ElementEventDriver { // class that drives the region flashing thing
 		
 	}
 	
-	public void runEvent(ElementEvent event, int time) {
+	public void registerEvent(ElementEvent event, int time) {
 				
 		synchronized(eventMap) {
 			
@@ -28,6 +28,7 @@ public class ElementEventDriver { // class that drives the region flashing thing
 				
 				eventMap.remove(event).cancel(true);
 				eventMap.put(event, executor.schedule(event, time, TimeUnit.MILLISECONDS));
+				event.drawBeginning();
 				
 			}
 			

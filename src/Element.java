@@ -20,7 +20,7 @@ public class Element {
 		
 	}
 	
-	public void drawElement(Graphics g) {
+	public void drawElement(Graphics g, Color color) {
 		
 		int topOffset = 20;
 		int bottomOffset = 20;
@@ -36,7 +36,7 @@ public class Element {
 		int deltaY = (int) total_height - y - bottomOffset;
 		
 		g.clearRect(x, topOffset, deltaX, (int) reduced_height);
-		g.setColor(Color.WHITE);
+		g.setColor(color);
 		g.fillRect(x, y, deltaX, deltaY);
 		
 	}
