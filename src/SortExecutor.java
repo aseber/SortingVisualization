@@ -5,13 +5,27 @@ import java.util.HashSet;
 public class SortExecutor implements Runnable { // Simple class that allows me to move the processing to a new thread so the UI doesn't lag.
 													// Also lets me test the algorithms speed
 	
+	ElementArray array;
 	Sort sort;
+	
+	public SortExecutor(ElementArray inputArray) {
+		
+		array = inputArray;
+		
+	}
 	
 	public void run() {
 
-		long startTime = System.currentTimeMillis();
+		System.out.println("Test run!");
 		
-		PathfindRegion regionPathfind = null;
+		sort = new SortInsertion(array);
+		sort.start();
+		
+		System.out.println("Test run over!");
+		
+		//long startTime = System.currentTimeMillis();
+		
+		/*PathfindRegion regionPathfind = null;
 		HashSet<Box> boxesAlongRegionPath = null;
 		
 		if (VisualizationBase.hierarchicalPathfinding) {
@@ -79,7 +93,7 @@ public class SortExecutor implements Runnable { // Simple class that allows me t
 		pathfinder.start();
 		pathfinder.waitForFinish();
 		long endTime = System.currentTimeMillis();
-		VisualizationBase.VISUALIZATION_GUI.setRunTimeCounter(endTime - startTime);
+		VisualizationBase.VISUALIZATION_GUI.setRunTimeCounter(endTime - startTime);*/
 		
 	}
 

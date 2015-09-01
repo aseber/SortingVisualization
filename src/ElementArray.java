@@ -8,7 +8,7 @@ public class ElementArray {
 	// ElementArrays are an immutable data type that contains an ArrayList of elements.
 	// The constructor should add all values to the array
 	// Afterwards, the only methods you can do are get(index), swap(indexE1, indexE2), compare(indexE1, indexE2),
-	// getAccesses(), getCompares(), getSwaps(), getElements(), findClosestElement(xPos), and reset()
+	// getAccesses(), getCompares(), getSwaps(), getElements(), findClosestElement(xPos), size(), and reset()
 	
 	public static final int FORWARD_DIRECTION = 0;
 	public static final int REVERSE_DIRECTION = 1;
@@ -25,14 +25,15 @@ public class ElementArray {
 	private List<Element> elementArrayCopy = null;
 	private long accesses;
 	private long compares;
-	private long swaps;
+	private long sets;
 	
+	@SuppressWarnings("unchecked")
 	public ElementArray(int size, int direction, int order, double uniques) { // Do we ever set the element index correctly?
 		
 		elementArray = new ArrayList<Element>();
 		accesses = 0;
 		compares = 0;
-		swaps = 0;
+		sets = 0;
 		
 		ArrayList<Element> basicElementArray = new ArrayList<Element>();
 		
@@ -60,7 +61,7 @@ public class ElementArray {
 			
 			for (int index = 0; index < size; index++) {
 				
-				int value = (int) Math.floor((index) / intervalIncrement) * intervalIncrement;
+				int value = (int) Math.floor((index) / intervalIncrement) * intervalIncrement + 1;
 				
 				basicElementArray.add(new Element(value, index)); // Creates the forward Array, very fast and simple
 				
@@ -72,7 +73,7 @@ public class ElementArray {
 			
 			for (int index = 0; index < size; index++) {
 				
-				int value = (int) Math.floor((index) / intervalIncrement) * intervalIncrement;
+				int value = (int) Math.floor((index) / intervalIncrement) * intervalIncrement + 1;
 				
 				basicElementArray.add(new Element(value, (size - 1) - index)); // Creates the reverse Array, very fast and simple
 				
@@ -142,7 +143,7 @@ public class ElementArray {
 			
 		}
 		
-		elementArrayCopy = Collections.unmodifiableList(elementArray);
+		elementArrayCopy = Collections.unmodifiableList((ArrayList<Element>) elementArray.clone());
 		
 	}
 	
@@ -153,7 +154,7 @@ public class ElementArray {
 		
 	}
 	
-	public Element getWithoutIncrement(int index) {
+	private Element getWithoutIncrement(int index) {
 		
 		return elementArray.get(index);
 		
@@ -161,23 +162,48 @@ public class ElementArray {
 	
 	public int compare(int indexE1, int indexE2) {
 		
-		compares++;
-		Element e1 = this.get(indexE1);
-		Element e2 = this.get(indexE2);
-		
-		return e1.compare(e2);
+		Element E1 = this.get(indexE1);
+		Element E2 = this.get(indexE2);
+		return compare(E1, E2);
 		
 	}
 	
+	public int compare(Element E1, int indexE2) {
+		
+		Element E2 = this.get(indexE2);
+		return compare(E1, E2);
+		
+	}
+	
+	public int compare(int indexE1, Element E2) {
+		
+		Element E1 = this.get(indexE1);
+		return compare(E1, E2);
+		
+	}
+	
+	public int compare(Element E1, Element E2) {
+		
+		compares++;
+		return E1.compare(E2);
+		
+	}
+
 	public void swap(int indexE1, int indexE2) {
 		
-		swaps++;
 		Element E1 = this.get(indexE1);
 		Element E2 = this.get(indexE2);
-		E1.setIndex(indexE2);
-		E2.setIndex(indexE1);
-		elementArray.set(indexE2, E1);
-		elementArray.set(indexE1, E2);
+		set(indexE1, E2);
+		set(indexE2, E1);
+		
+	}
+	
+	public void set(int index, Element E1) {
+		
+		sets++;
+		E1.setIndex(index);
+		elementArray.set(index, E1);
+		VisualizationBase.VISUALIZATION_WINDOW.repaint(E1);
 		
 	}
 	
@@ -193,9 +219,9 @@ public class ElementArray {
 		
 	}
 	
-	public long getSwaps() {
+	public long getSets() {
 		
-		return swaps;
+		return sets;
 		
 	}
 	
@@ -214,16 +240,27 @@ public class ElementArray {
 		
 	}
 	
+	public int size() {
+		
+		return elementArray.size();
+		
+	}
+	
 	public void reset() {	// Resets the elementArray by first creating an empty arrayList and then getting all the values from the
 							// immutable list
 		
 		elementArray = new ArrayList<Element>();
+		accesses = 0;
+		compares = 0;
+		sets = 0;
 		
 		for (Element currentElement : elementArrayCopy) {
 			
 			elementArray.add(currentElement);
 			
 		}
+		
+		VisualizationBase.VISUALIZATION_WINDOW.repaintAllElements();
 		
 	}
 	

@@ -35,6 +35,7 @@ public class Element {
 		int deltaX = (int) Math.round(width / count_double) + 1;
 		int deltaY = (int) total_height - y - bottomOffset;
 		
+		g.clearRect(x, topOffset, deltaX, (int) reduced_height);
 		g.setColor(Color.WHITE);
 		g.fillRect(x, y, deltaX, deltaY);
 		
@@ -43,12 +44,6 @@ public class Element {
 	public int getValue() {
 		
 		return value;
-		
-	}
-	
-	public void setValue(int newValue) {
-		
-		value = newValue;
 		
 	}
 	

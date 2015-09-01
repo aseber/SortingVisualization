@@ -34,6 +34,8 @@ public class VisualizationBase {
 		VISUALIZATION_GUI.setVisible(true);
 		VISUALIZATION_GUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+		// Escape and reset is broken, continue to implement algorithm and see why the values are so high, on the fly value updating, sleep timer, event system ect
+		
 	}
 
 }

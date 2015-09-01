@@ -13,7 +13,7 @@ public class VisualizationGUI extends JFrame {
 	protected VisualizationWindow mainWindow;
 	private JLabel accessCounter = new JLabel("| Accesses: 0 ");
 	private JLabel compareCounter = new JLabel("| Compares: 0 ");
-	private JLabel swapCounter = new JLabel("| Swaps: 0 ");
+	private JLabel swapCounter = new JLabel("| Sets: 0 ");
 	private JLabel runTimeCounter = new JLabel("| Run Time: 0 ms");
 	private JButton runButton = new JButton("Start Simulation");
 	
@@ -26,7 +26,7 @@ public class VisualizationGUI extends JFrame {
 		
 	}
 	
-	public void setAccessCounter(int var) {
+	public void setAccessCounter(long var) {
 		
 		accessCounter.setText("| Accesses: " + var + " ");
 		
@@ -38,7 +38,7 @@ public class VisualizationGUI extends JFrame {
 		
 	}
 	
-	public void setCompareCounter(int var) {
+	public void setCompareCounter(long var) {
 		
 		compareCounter.setText("| Compares: " + var + " ");
 		
@@ -50,19 +50,19 @@ public class VisualizationGUI extends JFrame {
 		
 	}
 	
-	public void setSwapCounter(int var) {
+	public void setSetCounter(long var) {
 		
-		swapCounter.setText("| Swaps: " + var + " ");
-		
-	}
-	
-	public void resetSwapCounter() {
-		
-		setSwapCounter(0);
+		swapCounter.setText("| Sets: " + var + " ");
 		
 	}
 	
-	public void setRunTimeCounter(int var) {
+	public void resetSetCounter() {
+		
+		setSetCounter(0);
+		
+	}
+	
+	public void setRunTimeCounter(long var) {
 		
 		runTimeCounter.setText("| Run Time: " + var + " ms");
 		

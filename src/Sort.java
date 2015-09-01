@@ -16,7 +16,15 @@ public abstract class Sort {
 	public final void start() {
 		
 		running = true;
+		long start_time = System.currentTimeMillis();
 		sort();
+		long end_time = System.currentTimeMillis();
+		VisualizationBase.VISUALIZATION_GUI.setAccessCounter(array.getAccesses());
+		VisualizationBase.VISUALIZATION_GUI.setCompareCounter(array.getCompares());
+		VisualizationBase.VISUALIZATION_GUI.setSetCounter(array.getSets());
+		VisualizationBase.VISUALIZATION_GUI.setRunTimeCounter(end_time - start_time);
+		running = false;
+		sorted = true;
 		
 	}
 	

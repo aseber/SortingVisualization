@@ -140,7 +140,7 @@ public class VisualizationWindow extends JPanel implements ComponentListener, Mo
 
 	public void createElementsArray() {
 		
-		elementArray = new ElementArray(VisualizationBase.SORT_COUNT, ElementArray.FORWARD_DIRECTION, ElementArray.SORTED_ORDER, ElementArray.ALL_UNIQUE);
+		elementArray = new ElementArray(VisualizationBase.SORT_COUNT, ElementArray.REVERSE_DIRECTION, ElementArray.RANDOM_ORDER, ElementArray.FEW_UNIQUE);
 		repaintAllElements();
 		
 	}
@@ -195,13 +195,13 @@ public class VisualizationWindow extends JPanel implements ComponentListener, Mo
 		
 		if (e.getKeyCode() == KeyEvent.VK_SPACE) {
 			
-			
+			new Thread(new SortExecutor(elementArray)).start();
 			
 		}
 		
 		if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 			
-			
+			elementArray.reset();
 			
 		}
 		
