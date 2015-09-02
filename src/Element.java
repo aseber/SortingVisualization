@@ -11,16 +11,18 @@ public class Element {
 	
 	private int value;
 	private int index;
+	private Color color;
 	
 	public Element(int inputValue, int arrayIndex) {
 		
 		value = inputValue;
 		index = arrayIndex;
+		color = Color.WHITE;
 		VisualizationBase.VISUALIZATION_WINDOW.repaint(this);
 		
 	}
 	
-	public void drawElement(Graphics g, Color color) {
+	public void drawElement(Graphics g) {
 		
 		int topOffset = 20;
 		int bottomOffset = 20;
@@ -38,6 +40,7 @@ public class Element {
 		g.clearRect(x, topOffset, deltaX, (int) reduced_height);
 		g.setColor(color);
 		g.fillRect(x, y, deltaX, deltaY);
+		VisualizationBase.VISUALIZATION_WINDOW.repaint();
 		
 	}
 	
@@ -56,6 +59,18 @@ public class Element {
 	public void setIndex(int newIndex) {
 		
 		index = newIndex;
+		
+	}
+	
+	public Color getColor() {
+		
+		return color;
+		
+	}
+	
+	public void setColor(Color newColor) {
+		
+		color = newColor;
 		
 	}
 	
@@ -81,6 +96,13 @@ public class Element {
 		}
 		
 		return false;
+		
+	}
+	
+	@Override
+	public String toString() {
+		
+		return "Element " + getIndex() + ": " + getValue();
 		
 	}
 	

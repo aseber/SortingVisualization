@@ -1,18 +1,7 @@
-//import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics;
 
-//import com.google.common.hash.HashCode;
-import com.google.common.hash.HashFunction;
-import com.google.common.hash.Hashing;
-
 public class ElementEvent implements Runnable { // class that executes the region flashing thing
-	
-	//private static Color transparant = new Color(255, 255, 255, 0);
-	//private static AlphaComposite compositeApply = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f);
-	//private static AlphaComposite compositeRemove = AlphaComposite.getInstance(AlphaComposite.CLEAR, 1f);
-	
-	HashFunction hf = Hashing.md5();
 	
 	private Element element = null;
 	private Graphics g = null;
@@ -28,14 +17,16 @@ public class ElementEvent implements Runnable { // class that executes the regio
 	
 	public void drawBeginning() {
 		
-		element.drawElement(g, color);
+		element.setColor(color);
+		element.drawElement(g);
 		VisualizationBase.VISUALIZATION_WINDOW.repaint(element);
 		
 	}
 	
 	private void drawEnd() {
 		
-		element.drawElement(g, Color.WHITE);
+		element.setColor(Color.WHITE);
+		element.drawElement(g);
 		VisualizationBase.VISUALIZATION_WINDOW.repaint(element);
 		
 	}

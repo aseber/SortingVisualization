@@ -20,6 +20,7 @@ public class VisualizationWindow extends JPanel implements ComponentListener, Mo
 	private ElementArray elementArray = null;
 	private BufferedImage image;
 	private ElementEventDriver eventDriver = new ElementEventDriver();
+	private SortExecutor sortExecutor = new SortExecutor();
 	
 	public VisualizationWindow() {
 		
@@ -99,7 +100,7 @@ public class VisualizationWindow extends JPanel implements ComponentListener, Mo
 	
 	public void repaint(Element element) {
 
-		element.drawElement(image.getGraphics(), Color.WHITE);
+		element.drawElement(image.getGraphics());
 		repaint();
 		
 	}
@@ -114,7 +115,7 @@ public class VisualizationWindow extends JPanel implements ComponentListener, Mo
 		
 		for (Element element : elementArray.getElements()) {
 			
-			element.drawElement(image.getGraphics(), Color.WHITE);
+			element.drawElement(image.getGraphics());
 			
 		}
 		
@@ -177,21 +178,27 @@ public class VisualizationWindow extends JPanel implements ComponentListener, Mo
 	
 	public void keyPressed(KeyEvent e) {
 		
-		if (e.getKeyCode() == KeyEvent.VK_SHIFT) {
-			
-			
-			
-		}
+		if (e.getKeyCode() == KeyEvent.VK_SHIFT) {}
 		
 		if (e.getKeyCode() == KeyEvent.VK_SPACE) {
 			
-			new Thread(new SortExecutor(elementArray)).start();
+			sortExecutor.run(elementArray, VisualizationBase.CURRENT_ALGORITHM);
 			
 		}
 		
 		if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 			
-			elementArray.reset();
+			if (sortExecutor.isSorting()) {
+			
+				sortExecutor.stop();
+			
+			}
+			
+			else {
+				
+				elementArray.resetArray();
+				
+			}
 			
 		}
 		

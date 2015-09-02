@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -8,17 +9,80 @@ public class ElementArray {
 	// ElementArrays are an immutable data type that contains an ArrayList of elements.
 	// The constructor should add all values to the array
 	// and subsequent functions can modify the elementArray list, but not the copy
+	// The structure keeps track of gets, sets and compares for use in testing how much each sorting algorithm uses each feature
 	
-	public static final int FORWARD_DIRECTION = 0;
-	public static final int REVERSE_DIRECTION = 1;
+	public static enum directions {
+		
+		FORWARD ("Forward Direction"),
+		REVERSE ("Reverse Direction");
+		
+		private final String string;
+		
+		directions(String inputString) {
+			
+			string = inputString;
+			
+		}
+		
+		public String toString() {
+			
+			return string;
+			
+		}
+		
+	}
 	
-	public static final int SORTED_ORDER = 2;
-	public static final int RANDOM_ORDER = 3;
-	public static final int ALMOST_SORTED_ORDER = 4;
+	public static enum orders {
+		
+		SORTED ("Sorted Order"),
+		RANDOM ("Random Order"),
+		ALMOST_SORTED ("Almost Sorted Order");
+		
+		private final String string;
+		
+		orders(String inputString) {
+			
+			string = inputString;
+			
+		}
+		
+		public String toString() {
+			
+			return string;
+			
+		}
+		
+	}
 	
-	public static final double ALL_UNIQUE = 1.0;
-	public static final double FEW_UNIQUE = 0.75;
-	private static final double NO_UNIQUE = 0.0;
+	public static enum uniqueness {
+		
+		ALL (1.0, "All unique"),
+		FEW (0.75, "Few unique"),
+		NONE (0.0, "No unique");
+		
+		private final double value;
+		private final String string;
+		
+		uniqueness(double inputValue, String inputString) {
+			
+			value = inputValue;
+			string = inputString;
+			
+		}
+		
+		public double getValue() {
+			
+			return value;
+			
+		}
+		
+		public String toString() {
+			
+			return string;
+			
+		}
+		
+	}
 	
 	private ArrayList<Element> elementArray = null;
 	private List<Element> elementArrayCopy = null;
@@ -26,17 +90,17 @@ public class ElementArray {
 	private long compares;
 	private long sets;
 	
-	@SuppressWarnings("unchecked")
-	public ElementArray(int size, int direction, int order, double uniques) { // Do we ever set the element index correctly?
+	public ElementArray(int size, directions direction, orders order, uniqueness uniques) { // Do we ever set the element index correctly?
+		
+		ArrayList<Element> basicElementArray = new ArrayList<Element>();
 		
 		elementArray = new ArrayList<Element>();
+		elementArrayCopy = new ArrayList<Element>();
 		accesses = 0;
 		compares = 0;
 		sets = 0;
 		
-		ArrayList<Element> basicElementArray = new ArrayList<Element>();
-		
-		if (uniques <= NO_UNIQUE || uniques > ALL_UNIQUE) {
+		if (uniques.getValue() <= uniqueness.NONE.getValue() || uniques.getValue() > uniqueness.ALL.getValue()) {
 			
 			throw new IllegalArgumentException("Invalid uniques passed to ElementArray constructor: " + uniques);
 			
@@ -44,93 +108,77 @@ public class ElementArray {
 		
 		int intervalIncrement = 0;
 		
-		if (uniques == ALL_UNIQUE) {
+		if (uniques == uniqueness.ALL) {
 			
 			intervalIncrement = 1;
 			
 		}
 		
-		else {
+		else if (uniques == uniqueness.FEW){
 		
-			intervalIncrement = (int) Math.ceil(size * (1.0 - uniques));
-			
-		}
-		
-		if (direction == FORWARD_DIRECTION) {
-			
-			for (int index = 0; index < size; index++) {
-				
-				int value = (int) Math.floor((index) / intervalIncrement) * intervalIncrement + 1;
-				
-				basicElementArray.add(new Element(value, index)); // Creates the forward Array, very fast and simple
-				
-			}
-			
-		}
-		
-		else if (direction == REVERSE_DIRECTION) {
-			
-			for (int index = 0; index < size; index++) {
-				
-				int value = (int) Math.floor((index) / intervalIncrement) * intervalIncrement + 1;
-				
-				basicElementArray.add(new Element(value, (size - 1) - index)); // Creates the reverse Array, very fast and simple
-				
-			}
+			intervalIncrement = (int) Math.ceil(size * (1.0 - uniques.getValue()));
 			
 		}
 		
 		else {
 			
-			throw new IllegalArgumentException("Invalid direction flag passed to ElementArray constructor: " + direction);
+			throw new IllegalArgumentException("Invalid uniqueness flag passed to ElementArray constructor: " + uniques);
 			
 		}
 		
-		if (order == SORTED_ORDER) {
+		for (int index = 0; index < size; index++) {
+		
+			int value = -1;
 			
-			for (Element currentElement : basicElementArray) {
-				
-				elementArray.add(currentElement);
+			if (direction == ElementArray.directions.FORWARD) {
+			
+				value = (int) Math.floor((index) / intervalIncrement) * intervalIncrement + intervalIncrement;
 				
 			}
 			
+			else {
+				
+				value = (size) - (int) Math.ceil((index) / intervalIncrement) * intervalIncrement;
+				
+			}
+			
+			basicElementArray.add(new Element(value, -1)); // Creates the forward Array, very fast and simple
+			
 		}
+		
+		if (order == ElementArray.orders.SORTED) {} // Nothing to do!
 
-		else if (order == RANDOM_ORDER) { // Randomize by taking the forward array and doing 10*size random swaps
+		else if (order == ElementArray.orders.RANDOM) { // Randomize by taking the forward array and doing 10*size random swaps
 			
-			ElementArray sortingElementArray = new ElementArray(size, direction, SORTED_ORDER, uniques);
 			int RANDOMIZE_COUNTER = size * 10;
 			Random random = new Random();
 			
 			for (int i = 0; i < RANDOMIZE_COUNTER; i++) {
 				
-				sortingElementArray.swap(random.nextInt(size), random.nextInt(size));
+				int index1 = random.nextInt(size);
+				int index2 = random.nextInt(size);
 				
-			}
-			
-			for (Element currentElement : sortingElementArray.getElements()) {
-				
-				elementArray.add(currentElement);
+				Element E1 = basicElementArray.get(index1);
+				basicElementArray.set(index1, basicElementArray.get(index2));
+				basicElementArray.set(index2, E1);
 				
 			}
 			
 		}
 		
-		else if (order == ALMOST_SORTED_ORDER) { // Randomize by taking the forward array and doing size / 50 random swaps
+		else if (order == ElementArray.orders.ALMOST_SORTED) { // Randomize by taking the forward array and doing size / 50 random swaps
 			
-			ElementArray sortingElementArray = new ElementArray(size, direction, SORTED_ORDER, uniques);
 			int RANDOMIZE_COUNTER = (int) Math.ceil(size / 50);
 			Random random = new Random();
 			
 			for (int i = 0; i < RANDOMIZE_COUNTER; i++) {
 				
-				sortingElementArray.swap(random.nextInt(size), random.nextInt(size));
+				int index1 = random.nextInt(size);
+				int index2 = random.nextInt(size);
 				
-			}
-			
-			for (Element currentElement : sortingElementArray.getElements()) {
-				
-				elementArray.add(currentElement);
+				Element E1 = basicElementArray.get(index1);
+				basicElementArray.set(index1, basicElementArray.get(index2));
+				basicElementArray.set(index2, E1);
 				
 			}
 			
@@ -142,7 +190,25 @@ public class ElementArray {
 			
 		}
 		
-		elementArrayCopy = Collections.unmodifiableList((ArrayList<Element>) elementArray.clone());
+		for (int index = 0; index < size; index++) { // Fix all element indexes now!
+			
+			basicElementArray.get(index).setIndex(index);;
+			
+		}
+		
+		for (Element currentElement : basicElementArray) { // Push all elements to the elementArray
+			
+			elementArray.add(currentElement);
+			
+		}
+		
+		for (Element currentElement : elementArray) { // Make a copy of elementArray and store it in the copy variable for use later
+		
+			elementArrayCopy.add(new Element(currentElement.getValue(), currentElement.getIndex()));
+			
+		}
+		
+		elementArrayCopy = Collections.unmodifiableList(elementArrayCopy);
 		
 	}
 	
@@ -150,7 +216,7 @@ public class ElementArray {
 		
 		accesses++;
 		Element element = elementArray.get(index);
-		//VisualizationBase.VISUALIZATION_WINDOW.registerEvent(element, Color.RED, 5000); // Slow
+		VisualizationBase.VISUALIZATION_WINDOW.registerEvent(element, Color.RED, VisualizationBase.CHANGE_TIMER);
 		return element;
 		
 	}
@@ -186,8 +252,8 @@ public class ElementArray {
 	public int compare(Element E1, Element E2) {
 		
 		compares++;
-		//VisualizationBase.VISUALIZATION_WINDOW.registerEvent(E1, Color.GREEN, 5000);
-		//VisualizationBase.VISUALIZATION_WINDOW.registerEvent(E2, Color.GREEN, 5000);
+		VisualizationBase.VISUALIZATION_WINDOW.registerEvent(E1, Color.GREEN, VisualizationBase.CHANGE_TIMER);
+		VisualizationBase.VISUALIZATION_WINDOW.registerEvent(E2, Color.GREEN, VisualizationBase.CHANGE_TIMER);
 		return E1.compare(E2);
 		
 	}
@@ -206,7 +272,7 @@ public class ElementArray {
 		sets++;
 		E1.setIndex(index);
 		elementArray.set(index, E1);
-		//VisualizationBase.VISUALIZATION_WINDOW.registerEvent(E1, Color.BLUE, 5000);
+		VisualizationBase.VISUALIZATION_WINDOW.registerEvent(E1, Color.BLUE, VisualizationBase.CHANGE_TIMER);
 		VisualizationBase.VISUALIZATION_WINDOW.repaint(E1);
 		
 	}
@@ -237,9 +303,10 @@ public class ElementArray {
 	
 	public Element getClosestElement(int xPos) {
 		
-		int count = elementArray.size();
+		int count = size();
 		double interval = (VisualizationBase.WINDOW_SIZE.getWidth() / ((double) elementArray.size()));
 		int index = MyUtils.clampInt(count - 1, (int) Math.round(xPos / interval), 0);
+		
 		return getWithoutIncrement(index);
 		
 	}
@@ -250,18 +317,23 @@ public class ElementArray {
 		
 	}
 	
-	public void reset() {	// Resets the elementArray by first creating an empty arrayList and then getting all the values from the
-							// immutable list
+	public void resetCounters() {
 		
-		elementArray = new ArrayList<Element>();
 		accesses = 0;
 		compares = 0;
 		sets = 0;
 		
+	}
+	
+	public void resetArray() {	// Resets the elementArray by first creating an empty arrayList and then getting all the values from the
+							// immutable list
+		
+		elementArray = new ArrayList<Element>();
+		resetCounters();
+		
 		for (Element currentElement : elementArrayCopy) {
 			
-			System.out.println(currentElement.getIndex());
-			elementArray.add(currentElement);
+			elementArray.add(new Element(currentElement.getValue(), currentElement.getIndex()));
 			
 		}
 		
