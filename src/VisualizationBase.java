@@ -30,6 +30,7 @@ public class VisualizationBase {
 		//	between the window and the sorting, that doesn't feel right in my opinion. Perhaps if I got #2 solved, I could remove the executor entirely.
 		// bools to disable drawing and such for better runtime representations
 		// Time slow down after running multiple algorithms, why?
+		// No unique should not be an acceptable option in algorithm dialog
 		
 	}
 
