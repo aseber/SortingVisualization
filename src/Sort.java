@@ -3,35 +3,27 @@ public abstract class Sort implements Runnable {
 	
 	public static enum algorithms {
 		
-		BOGO ("Bogo Sort", false),
-		HEAP ("Heap Sort", false),
-		GNOME ("Gnome Sort", false),
-		MERGE ("Merge Sort", false),
-		SHELL ("Shell Sort", false),
-		QUICK ("Quick Sort", false),
-		BUBBLE ("Bubble Sort", true),
-		SHAKER ("Shaker Sort", true),
-		BITONIC ("Bitonic Sort", false),
-		STDSORT ("std::sort", false),
-		RADIXLSD ("Radix LSD Sort", false),
-		RADIXMSD ("Radix MSD Sort", false),
-		INSERTION ("Insertion Sort", true),
-		SELECTION ("Selection Sort", true),
-		STDSTABLESORT ("std::stablesort", false);
+		//BOGO ("Bogo Sort"),
+		//HEAP ("Heap Sort"),
+		//GNOME ("Gnome Sort"),
+		//MERGE ("Merge Sort"),
+		//SHELL ("Shell Sort"),
+		//QUICK ("Quick Sort"),
+		BUBBLE ("Bubble Sort"),
+		SHAKER ("Shaker Sort"),
+		//BITONIC ("Bitonic Sort"),
+		//STDSORT ("std::sort"),
+		//RADIXLSD ("Radix LSD Sort"),
+		//RADIXMSD ("Radix MSD Sort"),
+		INSERTION ("Insertion Sort"),
+		SELECTION ("Selection Sort");
+		//STDSTABLESORT ("std::stablesort");
 		
 		private final String name;
-		private final boolean implemented;
 		
-		private algorithms(String s, boolean implementedInput) {
+		private algorithms(String s) {
 		
 			name = s;
-			implemented = implementedInput;
-			
-		}
-		
-		public boolean isImplemented() {
-			
-			return implemented;
 			
 		}
 		

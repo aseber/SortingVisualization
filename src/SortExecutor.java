@@ -46,7 +46,7 @@ public class SortExecutor { // Simple class that allows me to move the processin
 
 	private Sort createSort(ElementArray inputArray, Sort.algorithms sortingAlgorithm) {
 		
-		if (VisualizationBase.CURRENT_ALGORITHM == Sort.algorithms.BOGO) {
+		/*if (VisualizationBase.CURRENT_ALGORITHM == Sort.algorithms.BOGO) {
 			
 			//return new SortBogo(inputArray);
 		
@@ -80,9 +80,9 @@ public class SortExecutor { // Simple class that allows me to move the processin
 			
 			//return new SortQuick(inputArray);
 		
-		}
+		}*/
 		
-		else if (VisualizationBase.CURRENT_ALGORITHM == Sort.algorithms.BUBBLE) {
+		if (VisualizationBase.CURRENT_ALGORITHM == Sort.algorithms.BUBBLE) {
 			
 			return new SortBubble(inputArray);
 		
@@ -94,29 +94,29 @@ public class SortExecutor { // Simple class that allows me to move the processin
 		
 		}
 		
-		else if (VisualizationBase.CURRENT_ALGORITHM == Sort.algorithms.BITONIC) {
+		//else if (VisualizationBase.CURRENT_ALGORITHM == Sort.algorithms.BITONIC) {
 			
 			//return new SortBitonic(inputArray);
 		
-		}
+		//}
 		
-		else if (VisualizationBase.CURRENT_ALGORITHM == Sort.algorithms.STDSORT) {
+		//else if (VisualizationBase.CURRENT_ALGORITHM == Sort.algorithms.STDSORT) {
 			
 			//return new SortStd(inputArray);
 		
-		}
+		//}
 		
-		else if (VisualizationBase.CURRENT_ALGORITHM == Sort.algorithms.RADIXLSD) {
+		//else if (VisualizationBase.CURRENT_ALGORITHM == Sort.algorithms.RADIXLSD) {
 			
 			//return new SortRadixLSD(inputArray);
 		
-		}
+		//}
 		
-		else if (VisualizationBase.CURRENT_ALGORITHM == Sort.algorithms.RADIXMSD) {
+		//else if (VisualizationBase.CURRENT_ALGORITHM == Sort.algorithms.RADIXMSD) {
 			
 			//return new SortRadixMSD(inputArray);
 		
-		}
+		//}
 		
 		else if (VisualizationBase.CURRENT_ALGORITHM == Sort.algorithms.INSERTION) {
 			
@@ -130,11 +130,11 @@ public class SortExecutor { // Simple class that allows me to move the processin
 		
 		}
 		
-		else if (VisualizationBase.CURRENT_ALGORITHM == Sort.algorithms.STDSTABLESORT) {
+		//else if (VisualizationBase.CURRENT_ALGORITHM == Sort.algorithms.STDSTABLESORT) {
 			
 			//return new SortStdStable(inputArray);
 		
-		}
+		//}
 		
 		else {
 			
@@ -142,7 +142,7 @@ public class SortExecutor { // Simple class that allows me to move the processin
 			
 		}
 		
-		return null;
+		//return null;
 		
 	}
 	

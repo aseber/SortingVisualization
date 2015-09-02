@@ -12,6 +12,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import com.jgoodies.forms.factories.CC;
@@ -24,8 +25,12 @@ public class WindowDialog extends JDialog {
 	 * 
 	 */
 	private static final long serialVersionUID = -2295277117437760048L;
-	JTextField boxCountField;
-	JTextField boxSizeField;
+	JTextField windowXSizeField;
+	JTextField windowYSizeField;
+	JRadioButton drawSets;
+	JRadioButton drawCompares;
+	JRadioButton drawGets;
+	JRadioButton drawScreenUpdatesWhileSorting;
 
 	public WindowDialog(Frame owner) {
 		
@@ -45,32 +50,44 @@ public class WindowDialog extends JDialog {
 		
 		JPanel AlgorithmDialogGUI = new JPanel();
 		JPanel contentPanel = new JPanel();
-		JLabel boxCountLabel = new JLabel();
-		JLabel boxSizeLabel = new JLabel();
-		boxCountField = new JTextField();
-		boxSizeField = new JTextField();
+		windowXSizeField = new JTextField();
+		windowYSizeField = new JTextField();
+		drawSets = new JRadioButton();
+		drawCompares = new JRadioButton();
+		drawGets = new JRadioButton();
+		drawScreenUpdatesWhileSorting = new JRadioButton();
 		JButton CancelButton = new JButton();
 		JButton AcceptButton = new JButton();
 			
-		setTitle("Window Size Selector");
+		setTitle("Window Settings");
 		Container contentPane = getContentPane();
 		contentPane.setLayout(new BorderLayout());
 		
 		AlgorithmDialogGUI.setLayout(new BorderLayout());
 		
-		contentPanel.setLayout(new FormLayout("3px, 150px, 5px, 100px, 5px", "5px, 25px, 5px, 25px, 5px, 50px"));
+		contentPanel.setLayout(new FormLayout("3px, 150px, 5px, 150px, 5px", "5px, 25px, 5px, 25px, 5px, 25px, 5px, 25px, 5px, 25px"));
 		
-		boxCountLabel.setText("Window X Size");
-		contentPanel.add(boxCountLabel, CC.xywh(2, 2, 1, 1));
+		windowXSizeField.setText(Integer.toString(VisualizationBase.WINDOW_SIZE.width));
+		contentPanel.add(windowXSizeField, CC.xywh(2, 2, 1, 1));
 		
-		boxCountField.setText(Integer.toString(VisualizationBase.ROW_COUNT));
-		contentPanel.add(boxCountField, CC.xywh(4, 2, 1, 1));
+		windowYSizeField.setText(Integer.toString(VisualizationBase.WINDOW_SIZE.height));
+		contentPanel.add(windowYSizeField, CC.xywh(4, 2, 1, 1));
 		
-		boxSizeLabel.setText("Box Row/Column Size");
-		contentPanel.add(boxSizeLabel, CC.xywh(2, 4, 1, 1));
+		drawSets.setText("Draw set updates");
+		drawSets.setSelected(false);
+		contentPanel.add(drawSets, CC.xywh(2, 4, 2, 1));
 		
-		boxSizeField.setText(Integer.toString((int) (VisualizationBase.size.getWidth())));
-		contentPanel.add(boxSizeField, CC.xywh(4, 4, 1, 1));
+		drawCompares.setText("Draw compare updates");
+		drawCompares.setSelected(false);
+		contentPanel.add(drawCompares, CC.xywh(2, 4, 2, 1));
+		
+		drawGets.setText("Draw get updates");
+		drawGets.setSelected(false);
+		contentPanel.add(drawGets, CC.xywh(2, 6, 2, 1));
+		
+		drawScreenUpdatesWhileSorting.setText("Draw screen updates while sorting");
+		drawScreenUpdatesWhileSorting.setSelected(false);
+		contentPanel.add(drawScreenUpdatesWhileSorting, CC.xywh(2, 8, 2, 1));
 		
 		CancelButton.setText("Cancel");
 		CancelButton.addActionListener(new ActionListener() {
@@ -82,7 +99,7 @@ public class WindowDialog extends JDialog {
 			}
 			
 		});
-		contentPanel.add(CancelButton, CC.xywh(2, 6, 1, 1));
+		contentPanel.add(CancelButton, CC.xywh(2, 10, 1, 1));
 		
 		AcceptButton.setText("Accept");
 		AcceptButton.addActionListener(new ActionListener() {
@@ -94,7 +111,7 @@ public class WindowDialog extends JDialog {
 			}
 			
 		});
-		contentPanel.add(AcceptButton, CC.xywh(4, 6, 1, 1));
+		contentPanel.add(AcceptButton, CC.xywh(4, 10, 1, 1));
 		
 		AlgorithmDialogGUI.add(contentPanel, BorderLayout.NORTH);
 		contentPane.add(AlgorithmDialogGUI, BorderLayout.CENTER);
@@ -112,26 +129,9 @@ public class WindowDialog extends JDialog {
 	
 	private void AcceptButtonMouseCLicked() {
 		
-		if (VisualizationBase.VISUALIZATION_WINDOW.pathfinder != null) {
-			
-			if (VisualizationBase.VISUALIZATION_WINDOW.pathfinder.isRunning()) {
-				
-				VisualizationBase.VISUALIZATION_WINDOW.pathfinder.end();
-				
-			}
-			
-		}
+		VisualizationBase.WINDOW_SIZE.setSize(Integer.parseInt(windowXSizeField.getText()), Integer.parseInt(windowYSizeField.getText()));
+		VisualizationBase.VISUALIZATION_WINDOW.setSize(VisualizationBase.WINDOW_SIZE);
 		
-		VisualizationBase.ROW_COUNT = Integer.parseInt(boxCountField.getText());
-		VisualizationBase.COLUMN_COUNT = Integer.parseInt(boxCountField.getText());
-		int sizeInt = Integer.parseInt(boxSizeField.getText());
-		VisualizationBase.size.setSize(sizeInt, sizeInt);
-		Dimension windowSize = new Dimension((int) (VisualizationBase.ROW_COUNT*VisualizationBase.size.getWidth()), (int) (VisualizationBase.COLUMN_COUNT*VisualizationBase.size.getHeight()));
-		VisualizationBase.VISUALIZATION_WINDOW.setWindowSize(windowSize);
-		Box.clearBoxes();
-		VisualizationBase.VISUALIZATION_WINDOW.createBoxField();
-		VisualizationBase.VISUALIZATION_WINDOW.invalidate();
-		VisualizationBase.VISUALIZATION_WINDOW.repaint();
 		
 		this.dispose();
 		

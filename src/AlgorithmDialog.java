@@ -54,19 +54,7 @@ public class AlgorithmDialog extends JDialog implements KeyListener {
 		JPanel contentPanel = new JPanel();
 		JPanel contentPanel2 = new JPanel();
 		
-		algorithmsList = new JComboBox<Sort.algorithms>();
-		
-		for (Sort.algorithms algorithm : Sort.algorithms.values()) {
-			
-			if (algorithm.isImplemented()) {
-			
-				algorithmsList.addItem(algorithm);
-			
-			}
-			
-		}
-		
-		//algorithmsList = new JComboBox<Sort.algorithms>(Sort.algorithms.values());
+		algorithmsList = new JComboBox<Sort.algorithms>(Sort.algorithms.values());
 		directionsList = new JComboBox<ElementArray.directions>(ElementArray.directions.values());
 		ordersList = new JComboBox<ElementArray.orders>(ElementArray.orders.values());
 		uniquenessList = new JComboBox<ElementArray.uniqueness>(ElementArray.uniqueness.values());
