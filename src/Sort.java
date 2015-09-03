@@ -9,14 +9,14 @@ public abstract class Sort implements Runnable {
 		//MERGE ("Merge Sort"),
 		//SHELL ("Shell Sort"),
 		//QUICK ("Quick Sort"),
-		BUBBLE ("Bubble Sort"),
-		SHAKER ("Shaker Sort"),
+		BUBBLE ("Bubble Sort") {Sort run(ElementArray array) {return new SortBubble(array);}},
+		SHAKER ("Shaker Sort") {Sort run(ElementArray array) {return new SortShaker(array);}},
 		//BITONIC ("Bitonic Sort"),
 		//STDSORT ("std::sort"),
 		//RADIXLSD ("Radix LSD Sort"),
 		//RADIXMSD ("Radix MSD Sort"),
-		INSERTION ("Insertion Sort"),
-		SELECTION ("Selection Sort");
+		INSERTION ("Insertion Sort") {Sort run(ElementArray array) {return new SortInsertion(array);}},
+		SELECTION ("Selection Sort") {Sort run(ElementArray array) {return new SortSelection(array);}};
 		//STDSTABLESORT ("std::stablesort");
 		
 		private final String name;
@@ -26,6 +26,8 @@ public abstract class Sort implements Runnable {
 			name = s;
 			
 		}
+	
+		abstract Sort run(ElementArray array);
 		
 		public String toString() {
 			

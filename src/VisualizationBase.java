@@ -27,11 +27,10 @@ public class VisualizationBase {
 		VISUALIZATION_GUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		// Continue to implement algorithms and see why the values are so high, on the fly value updating
-		// sort = VisualizationBase.CURRENT_ALGORITHM.run(); This would be amazing if I knew how to implement it correctly!
 		// Fix the GUI for sorting states, should set condition and then simply redraw the field
 		// Check all that is calling repaint(), trim down those calls
 		// I don't like the SortExecutor class to stop sorting threads, it's using the depreciated Thread.stop() command, the class also acts like a liaison
-		//	between the window and the sorting, that doesn't feel right in my opinion. Perhaps if I got #2 solved, I could remove the executor entirely.
+		// Remove sortExecutor?
 		// bools to disable drawing and such for better runtime representations (implement them!)
 		// Time slow down after running multiple algorithms, why?
 		// No unique should not be an acceptable option in algorithm dialog
