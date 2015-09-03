@@ -136,9 +136,15 @@ public class VisualizationWindow extends JPanel implements ComponentListener, Mo
 		
 	}
 	
-	public void resetElementArray() { // Sets ALL flags to default
+	public void deleteElementArray() {
 		
 		elementArray = null;
+		
+	}
+	
+	public void resetElementArray() {
+		
+		elementArray.resetArray();
 		
 	}
 	
@@ -150,7 +156,6 @@ public class VisualizationWindow extends JPanel implements ComponentListener, Mo
 		VisualizationBase.VISUALIZATION_GUI.setSize(newDimension);
 		image.getGraphics().setColor(Color.BLACK);
 		image.getGraphics().drawRect(0, 0, image.getWidth(), getHeight());
-		
 		
 	}
 	
@@ -196,7 +201,7 @@ public class VisualizationWindow extends JPanel implements ComponentListener, Mo
 			
 			else {
 				
-				elementArray.resetArray();
+				resetElementArray();
 				
 			}
 			

@@ -9,6 +9,10 @@ public class VisualizationBase {
 	public static int SLEEP_TIMER = 0;
 	public static int CHANGE_TIMER = 100;
 	public static int SORT_COUNT = 1000;
+	public static boolean DRAW_SET_UPDATES = true;
+	public static boolean DRAW_GET_UPDATES = true;
+	public static boolean DRAW_COMPARE_UPDATES = true;
+	public static boolean DRAW_SCREEN_UPDATES_WHILE_SORTING = true;
 	public static Dimension WINDOW_SIZE = new Dimension(700, 400);
 	public static Sort.algorithms CURRENT_ALGORITHM = Sort.algorithms.SELECTION;
 	public static ElementArray.directions DIRECTION = ElementArray.directions.FORWARD;
@@ -28,7 +32,7 @@ public class VisualizationBase {
 		// Check all that is calling repaint(), trim down those calls
 		// I don't like the SortExecutor class to stop sorting threads, it's using the depreciated Thread.stop() command, the class also acts like a liaison
 		//	between the window and the sorting, that doesn't feel right in my opinion. Perhaps if I got #2 solved, I could remove the executor entirely.
-		// bools to disable drawing and such for better runtime representations
+		// bools to disable drawing and such for better runtime representations (implement them!)
 		// Time slow down after running multiple algorithms, why?
 		// No unique should not be an acceptable option in algorithm dialog
 		

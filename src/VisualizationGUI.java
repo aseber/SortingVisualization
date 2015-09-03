@@ -96,10 +96,6 @@ public class VisualizationGUI extends JFrame {
 		JMenuBar menuBar = new JMenuBar();
 		JMenu fileMenuGroup = new JMenu("File");
 		JMenu fileResetArray = new JMenu("Reset Array");
-		JMenuItem fileResetRandom = new JMenuItem("Random");
-		JMenuItem fileResetAlmostSorted = new JMenuItem("Almost Sorted");
-		JMenuItem fileResetFewUnique = new JMenuItem("Few Unique");
-		JMenuItem fileResetReverse = new JMenuItem("Reverse");
 		JMenuItem fileExit = new JMenuItem("Exit program");
 		JMenu settingsMenuGroup = new JMenu("Settings");
 		JMenuItem settingsChangeAlgorithm = new JMenuItem("Modify Algorithm");
@@ -119,47 +115,15 @@ public class VisualizationGUI extends JFrame {
 		add(menuBar, CC.xywh(1, 1, 3, 1, CC.FILL, CC.FILL));
 			menuBar.add(fileMenuGroup);
 				fileMenuGroup.add(fileResetArray);
-					fileResetArray.add(fileResetRandom);
-					fileResetRandom.addActionListener(new ActionListener() {
-
-						public void actionPerformed(ActionEvent arg0) {
+				fileResetArray.addActionListener(new ActionListener() {
+					
+					public void actionPerformed(ActionEvent arg0) {
 						
-							fileResetRandom();
-							
-						}
+						fileResetArray();
 						
-					});
-					fileResetArray.add(fileResetAlmostSorted);
-					fileResetAlmostSorted.addActionListener(new ActionListener() {
-
-						public void actionPerformed(ActionEvent arg0) {
-						
-							fileResetAlmostSorted();
-							
-						}
-						
-					});
-					fileResetArray.add(fileResetFewUnique);
-					fileResetFewUnique.addActionListener(new ActionListener() {
-
-						public void actionPerformed(ActionEvent arg0) {
-						
-							fileResetFewUnique();
-							
-						}
-						
-					});
-					fileResetArray.add(fileResetReverse);
-					fileResetReverse.addActionListener(new ActionListener() {
-
-						public void actionPerformed(ActionEvent arg0) {
-						
-							fileResetReverse();
-							
-						}
-						
-					});
-				
+					}
+					
+				});
 				fileMenuGroup.add(fileExit);
 				fileExit.addActionListener(new ActionListener() {
 					
@@ -208,9 +172,7 @@ public class VisualizationGUI extends JFrame {
 			menuBar.add(runTimeCounter);
 				
 		add(mainWindow, CC.xywh(1, 2, 3, 1, CC.FILL, CC.FILL));
-			
 		add(runButton, CC.xywh(2, 4, 1, 1, CC.FILL, CC.FILL));
-		
 		pack();
 		
 		Dimension size = new Dimension(VisualizationBase.WINDOW_SIZE.width + 17, VisualizationBase.WINDOW_SIZE.height + 94);
@@ -218,27 +180,9 @@ public class VisualizationGUI extends JFrame {
 		
 	}
 	
-	private void fileResetRandom() {
+	private void fileResetArray() {
 		
-		
-		
-	}
-	
-	private void fileResetAlmostSorted() {
-			
-
-			
-	}
-	
-	private void fileResetFewUnique() {
-		
-
-		
-	}
-	
-	private void fileResetReverse() {
-		
-
+		VisualizationBase.VISUALIZATION_WINDOW.resetElementArray();
 		
 	}
 	

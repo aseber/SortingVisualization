@@ -138,7 +138,7 @@ public class AlgorithmDialog extends JDialog implements KeyListener {
 		
 		if (VisualizationBase.DIRECTION != (ElementArray.directions) directionsList.getSelectedItem() || VisualizationBase.ORDER != (ElementArray.orders) ordersList.getSelectedItem() || VisualizationBase.UNIQUENESS != (ElementArray.uniqueness) uniquenessList.getSelectedItem() || VisualizationBase.SORT_COUNT != Integer.parseInt(sortSize.getText())) {
 			
-			VisualizationBase.VISUALIZATION_WINDOW.resetElementArray();
+			VisualizationBase.VISUALIZATION_WINDOW.deleteElementArray();
 			VisualizationBase.DIRECTION = (ElementArray.directions) directionsList.getSelectedItem();
 			VisualizationBase.ORDER = (ElementArray.orders) ordersList.getSelectedItem();
 			VisualizationBase.UNIQUENESS = (ElementArray.uniqueness) uniquenessList.getSelectedItem();
