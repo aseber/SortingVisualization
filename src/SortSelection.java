@@ -19,7 +19,7 @@ public class SortSelection extends Sort {
 				
 				iMin = j;
 				checkWait();
-				incrementCounters();
+				drawCounterUpdates();
 				
 				for (i = j + 1; i < array.size(); i++) {
 					

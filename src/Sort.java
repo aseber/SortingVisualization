@@ -6,17 +6,17 @@ public abstract class Sort implements Runnable {
 		//BOGO ("Bogo Sort"),
 		//HEAP ("Heap Sort"),
 		//GNOME ("Gnome Sort"),
-		//MERGE ("Merge Sort"),
-		//SHELL ("Shell Sort"),
+		MERGE ("Merge Sort") {Sort sort(ElementArray array) {return new SortMerge(array);}},
+		SHELL ("Shell Sort") {Sort sort(ElementArray array) {return new SortShell(array);}}, // Works but needs extra data regarding sizes!
 		//QUICK ("Quick Sort"),
-		BUBBLE ("Bubble Sort") {Sort run(ElementArray array) {return new SortBubble(array);}},
-		SHAKER ("Shaker Sort") {Sort run(ElementArray array) {return new SortShaker(array);}},
+		BUBBLE ("Bubble Sort") {Sort sort(ElementArray array) {return new SortBubble(array);}},
+		SHAKER ("Shaker Sort") {Sort sort(ElementArray array) {return new SortShaker(array);}},
 		//BITONIC ("Bitonic Sort"),
 		//STDSORT ("std::sort"),
 		//RADIXLSD ("Radix LSD Sort"),
 		//RADIXMSD ("Radix MSD Sort"),
-		INSERTION ("Insertion Sort") {Sort run(ElementArray array) {return new SortInsertion(array);}},
-		SELECTION ("Selection Sort") {Sort run(ElementArray array) {return new SortSelection(array);}};
+		INSERTION ("Insertion Sort") {Sort sort(ElementArray array) {return new SortInsertion(array);}},
+		SELECTION ("Selection Sort") {Sort sort(ElementArray array) {return new SortSelection(array);}};
 		//STDSTABLESORT ("std::stablesort");
 		
 		private final String name;
@@ -27,7 +27,7 @@ public abstract class Sort implements Runnable {
 			
 		}
 	
-		abstract Sort run(ElementArray array);
+		abstract Sort sort(ElementArray array);
 		
 		public String toString() {
 			
@@ -60,9 +60,10 @@ public abstract class Sort implements Runnable {
 		start_time = System.currentTimeMillis();
 		sort();
 		long end_time = System.currentTimeMillis();
-		VisualizationBase.VISUALIZATION_GUI.setAccessCounter(array.getAccesses());
-		VisualizationBase.VISUALIZATION_GUI.setCompareCounter(array.getCompares());
-		VisualizationBase.VISUALIZATION_GUI.setSetCounter(array.getSets());
+		VisualizationBase.VISUALIZATION_WINDOW.repaintAllElements();
+		VisualizationBase.VISUALIZATION_GUI.setAccessCounter(array.counter.getAccesses());
+		VisualizationBase.VISUALIZATION_GUI.setCompareCounter(array.counter.getCompares());
+		VisualizationBase.VISUALIZATION_GUI.setSetCounter(array.counter.getSets());
 		VisualizationBase.VISUALIZATION_GUI.setRunTimeCounter(end_time - start_time);
 		VisualizationBase.VISUALIZATION_GUI.setRunButtonState(true);
 		running = false;
@@ -90,13 +91,17 @@ public abstract class Sort implements Runnable {
 		
 	}
 	
-	protected final void incrementCounters() {
+	protected final void drawCounterUpdates() {
 		
-		VisualizationBase.VISUALIZATION_GUI.setAccessCounter(array.getAccesses());
-		VisualizationBase.VISUALIZATION_GUI.setCompareCounter(array.getCompares());
-		VisualizationBase.VISUALIZATION_GUI.setSetCounter(array.getSets());
-		long intermiediate_time = System.currentTimeMillis();
-		VisualizationBase.VISUALIZATION_GUI.setRunTimeCounter(intermiediate_time - start_time);
+		if (VisualizationBase.DRAW_SCREEN_UPDATES_WHILE_SORTING) {
+		
+			VisualizationBase.VISUALIZATION_GUI.setAccessCounter(array.counter.getAccesses());
+			VisualizationBase.VISUALIZATION_GUI.setCompareCounter(array.counter.getCompares());
+			VisualizationBase.VISUALIZATION_GUI.setSetCounter(array.counter.getSets());
+			long intermiediate_time = System.currentTimeMillis();
+			VisualizationBase.VISUALIZATION_GUI.setRunTimeCounter(intermiediate_time - start_time);
+			
+		}
 		
 	}
 	

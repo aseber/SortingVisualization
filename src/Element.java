@@ -12,35 +12,46 @@ public class Element {
 	private int value;
 	private int index;
 	private Color color;
+	private boolean drawable;
 	
-	public Element(int inputValue, int arrayIndex) {
+	public Element(int inputValue, int arrayIndex, boolean inputDrawable) {
 		
 		value = inputValue;
 		index = arrayIndex;
 		color = Color.WHITE;
-		VisualizationBase.VISUALIZATION_WINDOW.repaint(this);
+		drawable = inputDrawable;
+		
+		if (drawable) {
+		
+			VisualizationBase.VISUALIZATION_WINDOW.repaint(this);
+			
+		}
 		
 	}
 	
 	public void drawElement(Graphics g) {
 		
-		int topOffset = 20;
-		int bottomOffset = 20;
+		if (drawable) {
 		
-		double width = VisualizationBase.WINDOW_SIZE.getWidth();
-		double total_height = VisualizationBase.WINDOW_SIZE.getHeight();
-		double reduced_height = VisualizationBase.WINDOW_SIZE.getHeight() - topOffset - bottomOffset;
-		double count_double = (double) VisualizationBase.SORT_COUNT;
-		
-		int x = (int) Math.round(width * ((double) index / (count_double)));
-		int y = ((int) total_height - topOffset) - (int) Math.round(reduced_height * ((double) value / count_double));
-		int deltaX = (int) Math.round(width / count_double) + 1;
-		int deltaY = (int) total_height - y - bottomOffset;
-		
-		g.clearRect(x, topOffset, deltaX, (int) reduced_height);
-		g.setColor(color);
-		g.fillRect(x, y, deltaX, deltaY);
-		VisualizationBase.VISUALIZATION_WINDOW.repaint();
+			int topOffset = 20;
+			int bottomOffset = 20;
+			
+			double width = VisualizationBase.WINDOW_SIZE.getWidth();
+			double total_height = VisualizationBase.WINDOW_SIZE.getHeight();
+			double reduced_height = VisualizationBase.WINDOW_SIZE.getHeight() - topOffset - bottomOffset;
+			double count_double = (double) VisualizationBase.SORT_COUNT;
+			
+			int x = (int) Math.round(width * ((double) index / (count_double)));
+			int y = ((int) total_height - topOffset) - (int) Math.round(reduced_height * ((double) value / count_double));
+			int deltaX = (int) Math.round(width / count_double) + 1;
+			int deltaY = (int) total_height - y - bottomOffset;
+			
+			g.clearRect(x, topOffset, deltaX, (int) reduced_height);
+			g.setColor(color);
+			g.fillRect(x, y, deltaX, deltaY);
+			VisualizationBase.VISUALIZATION_WINDOW.repaint();
+			
+		}
 		
 	}
 	
@@ -53,6 +64,12 @@ public class Element {
 	public int getIndex() {
 		
 		return index;
+		
+	}
+	
+	public boolean isDrawable() {
+		
+		return drawable;
 		
 	}
 	

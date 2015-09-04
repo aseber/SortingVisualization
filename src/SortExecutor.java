@@ -25,8 +25,8 @@ public class SortExecutor { // Simple class that allows me to move the processin
 			
 			else {
 				
-				inputArray.resetCounters();
-				sort = VisualizationBase.CURRENT_ALGORITHM.run(inputArray);
+				inputArray.counter.resetCounters();
+				sort = VisualizationBase.CURRENT_ALGORITHM.sort(inputArray);
 				sortingThread = new Thread(sort);
 				sortingThread.start();
 				
@@ -36,7 +36,7 @@ public class SortExecutor { // Simple class that allows me to move the processin
 		
 		else {
 			
-			sort = VisualizationBase.CURRENT_ALGORITHM.run(inputArray);
+			sort = VisualizationBase.CURRENT_ALGORITHM.sort(inputArray);
 			sortingThread = new Thread(sort);
 			sortingThread.start();
 			

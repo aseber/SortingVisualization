@@ -86,19 +86,17 @@ public class ElementArray {
 	
 	private ArrayList<Element> elementArray = null;
 	private List<Element> elementArrayCopy = null;
-	private long accesses;
-	private long compares;
-	private long sets;
+	protected Counter counter;
+	private int offset;
 	
-	public ElementArray(int size, directions direction, orders order, uniqueness uniques) { // Do we ever set the element index correctly?
+	public ElementArray(int size, directions direction, orders order, uniqueness uniques, Counter inputCounter) { // Do we ever set the element index correctly?
 		
 		ArrayList<Element> basicElementArray = new ArrayList<Element>();
 		
 		elementArray = new ArrayList<Element>();
 		elementArrayCopy = new ArrayList<Element>();
-		accesses = 0;
-		compares = 0;
-		sets = 0;
+		counter = inputCounter;
+		offset = 0;
 		
 		if (uniques.getValue() <= uniqueness.NONE.getValue() || uniques.getValue() > uniqueness.ALL.getValue()) {
 			
@@ -142,7 +140,7 @@ public class ElementArray {
 				
 			}
 			
-			basicElementArray.add(new Element(value, -1)); // Creates the forward Array, very fast and simple
+			basicElementArray.add(new Element(value, -1, true)); // Creates the forward Array, very fast and simple
 			
 		}
 		
@@ -204,7 +202,7 @@ public class ElementArray {
 		
 		for (Element currentElement : elementArray) { // Make a copy of elementArray and store it in the copy variable for use later
 		
-			elementArrayCopy.add(new Element(currentElement.getValue(), currentElement.getIndex()));
+			elementArrayCopy.add(new Element(currentElement.getValue(), currentElement.getIndex(), currentElement.isDrawable()));
 			
 		}
 		
@@ -212,11 +210,25 @@ public class ElementArray {
 		
 	}
 	
+	public ElementArray(ArrayList<Element> inputElementArray, Counter inputCounter, int inputOffset) {
+		
+		elementArray = inputElementArray;
+		counter = inputCounter;
+		offset = inputOffset;
+		
+	}
+	
 	public Element get(int index) {
 		
-		accesses++;
+		counter.incrementAccesses();
 		Element element = elementArray.get(index);
-		VisualizationBase.VISUALIZATION_WINDOW.registerEvent(element, Color.RED, VisualizationBase.CHANGE_TIMER);
+		
+		if (VisualizationBase.DRAW_GET_UPDATES) {
+			
+			VisualizationBase.VISUALIZATION_WINDOW.registerEvent(element, Color.RED, VisualizationBase.CHANGE_TIMER);
+			
+		}
+		
 		return element;
 		
 	}
@@ -251,9 +263,15 @@ public class ElementArray {
 	
 	public int compare(Element E1, Element E2) {
 		
-		compares++;
-		VisualizationBase.VISUALIZATION_WINDOW.registerEvent(E1, Color.GREEN, VisualizationBase.CHANGE_TIMER);
-		VisualizationBase.VISUALIZATION_WINDOW.registerEvent(E2, Color.GREEN, VisualizationBase.CHANGE_TIMER);
+		counter.incrementCompares();
+		
+		if (VisualizationBase.DRAW_COMPARE_UPDATES) {
+		
+			VisualizationBase.VISUALIZATION_WINDOW.registerEvent(E1, Color.GREEN, VisualizationBase.CHANGE_TIMER);
+			VisualizationBase.VISUALIZATION_WINDOW.registerEvent(E2, Color.GREEN, VisualizationBase.CHANGE_TIMER);
+		
+		}
+		
 		return E1.compare(E2);
 		
 	}
@@ -269,29 +287,27 @@ public class ElementArray {
 	
 	public void set(int index, Element E1) {
 		
-		sets++;
-		E1.setIndex(index);
+		counter.incrementSets();
+		E1.setIndex(index + offset);
 		elementArray.set(index, E1);
-		VisualizationBase.VISUALIZATION_WINDOW.registerEvent(E1, Color.BLUE, VisualizationBase.CHANGE_TIMER);
-		VisualizationBase.VISUALIZATION_WINDOW.repaint(E1);
+		
+		if (VisualizationBase.DRAW_SET_UPDATES) {
+		
+			VisualizationBase.VISUALIZATION_WINDOW.registerEvent(E1, Color.BLUE, VisualizationBase.CHANGE_TIMER);
+			
+		}
+		
+		if (VisualizationBase.DRAW_SCREEN_UPDATES_WHILE_SORTING) {
+			
+			VisualizationBase.VISUALIZATION_WINDOW.repaint(E1);
+			
+		}
 		
 	}
 	
-	public long getAccesses() {
+	public ArrayList<Element> subList(int E1Index, int E2Index) {
 		
-		return accesses;
-		
-	}
-	
-	public long getCompares() {
-		
-		return compares;
-		
-	}
-	
-	public long getSets() {
-		
-		return sets;
+		return (ArrayList<Element>) elementArray.subList(E1Index, E2Index);
 		
 	}
 	
@@ -317,23 +333,15 @@ public class ElementArray {
 		
 	}
 	
-	public void resetCounters() {
-		
-		accesses = 0;
-		compares = 0;
-		sets = 0;
-		
-	}
-	
 	public void resetArray() {	// Resets the elementArray by first creating an empty arrayList and then getting all the values from the
 							// immutable list
 		
 		elementArray = new ArrayList<Element>();
-		resetCounters();
+		counter.resetCounters();
 		
 		for (Element currentElement : elementArrayCopy) {
 			
-			elementArray.add(new Element(currentElement.getValue(), currentElement.getIndex()));
+			elementArray.add(new Element(currentElement.getValue(), currentElement.getIndex(), currentElement.isDrawable()));
 			
 		}
 		
