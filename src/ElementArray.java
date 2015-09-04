@@ -305,6 +305,12 @@ public class ElementArray {
 		
 	}
 	
+	public void set(int index, int indexE) {
+		
+		set(index, get(indexE));
+		
+	}
+	
 	public int getOffset() {
 		
 		return offset;
