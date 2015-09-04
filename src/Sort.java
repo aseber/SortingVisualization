@@ -3,12 +3,12 @@ public abstract class Sort implements Runnable {
 	
 	public static enum algorithms {
 		
-		//BOGO ("Bogo Sort"),
+		BOGO ("Bogo Sort") {Sort sort(ElementArray array) {return new SortBogo(array);}},
 		//HEAP ("Heap Sort"),
-		//GNOME ("Gnome Sort"),
+		GNOME ("Gnome Sort") {Sort sort(ElementArray array) {return new SortGnome(array);}},
 		MERGE ("Merge Sort") {Sort sort(ElementArray array) {return new SortMerge(array);}},
 		SHELL ("Shell Sort") {Sort sort(ElementArray array) {return new SortShell(array);}}, // Works but needs extra data regarding sizes!
-		//QUICK ("Quick Sort"),
+		QUICK ("Quick Sort") {Sort sort(ElementArray array) {return new SortQuick(array);}},
 		BUBBLE ("Bubble Sort") {Sort sort(ElementArray array) {return new SortBubble(array);}},
 		SHAKER ("Shaker Sort") {Sort sort(ElementArray array) {return new SortShaker(array);}},
 		//BITONIC ("Bitonic Sort"),

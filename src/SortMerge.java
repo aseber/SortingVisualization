@@ -29,7 +29,7 @@ public class SortMerge extends Sort{
 		
 	}
 	
-	public void merge(int low, int middle, int high) {
+	public void merge(int low, int middle, int high) { // I dislike how this is implemented!
 		
 		int i = low;
 		int j = middle + 1;
@@ -37,6 +37,9 @@ public class SortMerge extends Sort{
 		Element key;
 		
 		while (i <= newMid && j <= high) {
+			
+			checkWait();
+			drawCounterUpdates();
 			
 			if (array.compare(i, j) > 0) {
 				

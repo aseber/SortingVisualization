@@ -35,7 +35,7 @@ public class SortShell extends Sort {
 				
 				System.out.println(gapSize);
 				
-				gapSize -= 2;
+				gapSize -= 5;
 				
 			} while (gapSize >= 1);
 			
