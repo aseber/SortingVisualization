@@ -305,9 +305,23 @@ public class ElementArray {
 		
 	}
 	
-	public ArrayList<Element> subList(int E1Index, int E2Index) {
+	public int getOffset() {
 		
-		return (ArrayList<Element>) elementArray.subList(E1Index, E2Index);
+		return offset;
+		
+	}
+	
+	public ElementArray subList(int E1Index, int E2Index) {
+		
+		ArrayList<Element> subList = new ArrayList<Element>();
+		
+		for (Element currentElement : elementArray.subList(E1Index, E2Index)) {
+			
+			subList.add(currentElement);
+			
+		}
+		
+		return new ElementArray(subList, counter, E1Index);
 		
 	}
 	

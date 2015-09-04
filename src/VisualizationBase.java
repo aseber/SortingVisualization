@@ -14,7 +14,7 @@ public class VisualizationBase {
 	public static boolean DRAW_COMPARE_UPDATES = true;
 	public static boolean DRAW_SCREEN_UPDATES_WHILE_SORTING = true;
 	public static Dimension WINDOW_SIZE = new Dimension(700, 400);
-	public static Sort.algorithms CURRENT_ALGORITHM = Sort.algorithms.SHELL;
+	public static Sort.algorithms CURRENT_ALGORITHM = Sort.algorithms.MERGE;
 	public static ElementArray.directions DIRECTION = ElementArray.directions.FORWARD;
 	public static ElementArray.orders ORDER = ElementArray.orders.RANDOM;
 	public static ElementArray.uniqueness UNIQUENESS = ElementArray.uniqueness.ALL;
