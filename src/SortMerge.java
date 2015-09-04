@@ -43,29 +43,33 @@ public class SortMerge extends Sort{
 		
 		int i = low;
 		int j = middle + 1;
-		int k = low;
+		int newMid = middle;
+		Element key;
 		
-		while (i < middle && j < high) {
+		while (i < newMid && j < high) {
 			
-			if (array.compare(i, j) < 0) {
+			if (array.compare(i, j) > 0) {
 				
-				array.set(k, i);
-				i++;
+				key = array.get(j);
 				
-			}
-			
-			else {
+				for (int index = j - 1; index >= i; index--) {
+					
+					array.set(index + 1, index);
+					
+				}
 				
-				array.set(k, j);
+				array.set(i, key);
+				
 				j++;
+				newMid++;
 				
 			}
 			
-			k++;
+			i++;
 			
 		}
 		
-		System.out.println("i diff: " + (middle - i));
+		/*System.out.println("i diff: " + (middle - i));
 		System.out.println("j diff: " + (high - j));
 		
 		while (i <= middle) {

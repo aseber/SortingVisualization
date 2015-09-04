@@ -95,7 +95,7 @@ public class VisualizationGUI extends JFrame {
 		VisualizationWindow mainWindow = new VisualizationWindow();
 		JMenuBar menuBar = new JMenuBar();
 		JMenu fileMenuGroup = new JMenu("File");
-		JMenu fileResetArray = new JMenu("Reset Array");
+		JMenuItem fileResetArray = new JMenuItem("Reset Array");
 		JMenuItem fileExit = new JMenuItem("Exit program");
 		JMenu settingsMenuGroup = new JMenu("Settings");
 		JMenuItem settingsChangeAlgorithm = new JMenuItem("Modify Algorithm");
