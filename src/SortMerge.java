@@ -29,7 +29,7 @@ public class SortMerge extends Sort{
 		
 	}
 	
-	public void merge(int low, int middle, int high) { // I dislike how this is implemented!
+	public void merge(int low, int middle, int high) {
 		
 		int i = low;
 		int j = middle + 1;

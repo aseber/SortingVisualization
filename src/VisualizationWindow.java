@@ -94,12 +94,10 @@ public class VisualizationWindow extends JPanel implements ComponentListener, Mo
 		
 		}
 		
-		//repaint();
-		
 	}
 	
 	public void repaint(Element element) {
-
+		
 		element.drawElement(image.getGraphics());
 		repaint();
 		
@@ -125,7 +123,7 @@ public class VisualizationWindow extends JPanel implements ComponentListener, Mo
 	
 	public void registerEvent(Element element, Color color, int time) {
 		
-		eventDriver.registerEvent(new ElementEvent(element, image.getGraphics(), color), time);
+		eventDriver.registerEvent(new ElementEvent(element, color), time);
 		
 	}
 

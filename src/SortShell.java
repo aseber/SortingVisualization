@@ -1,6 +1,6 @@
 public class SortShell extends Sort {
 
-	int gapSize = 11;
+	int gapSize = 51;
 	Element key;
 	int i;
 	int j;

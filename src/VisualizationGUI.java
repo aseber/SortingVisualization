@@ -172,6 +172,7 @@ public class VisualizationGUI extends JFrame {
 			menuBar.add(runTimeCounter);
 				
 		add(mainWindow, CC.xywh(1, 2, 3, 1, CC.FILL, CC.FILL));
+		runButton.setFocusable(false);
 		add(runButton, CC.xywh(2, 4, 1, 1, CC.FILL, CC.FILL));
 		pack();
 		

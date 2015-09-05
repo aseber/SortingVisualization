@@ -48,7 +48,7 @@ public class SortBogo extends Sort {
 		
 		for (int i = 1; i < array.size(); i++) {
 			
-			array.swap(random.nextInt(array.size() - 1), random.nextInt(array.size() - 1));
+			array.swap(random.nextInt(array.size()), random.nextInt(array.size()));
 			
 		}
 		

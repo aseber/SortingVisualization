@@ -57,7 +57,18 @@ public class AlgorithmDialog extends JDialog implements KeyListener {
 		algorithmsList = new JComboBox<Sort.algorithms>(Sort.algorithms.values());
 		directionsList = new JComboBox<ElementArray.directions>(ElementArray.directions.values());
 		ordersList = new JComboBox<ElementArray.orders>(ElementArray.orders.values());
-		uniquenessList = new JComboBox<ElementArray.uniqueness>(ElementArray.uniqueness.values());
+		uniquenessList = new JComboBox<ElementArray.uniqueness>();
+		
+		for (ElementArray.uniqueness uniqueElement : ElementArray.uniqueness.values()) {
+			
+			if (uniqueElement != ElementArray.uniqueness.NONE) {
+			
+				uniquenessList.addItem(uniqueElement);
+			
+			}
+			
+		}
+		
 		sortSize = new JTextField();
 		
 		JButton CancelButton = new JButton();

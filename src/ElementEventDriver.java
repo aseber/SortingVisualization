@@ -16,7 +16,7 @@ public class ElementEventDriver { // class that drives the region flashing thing
 	}
 	
 	public void registerEvent(ElementEvent event, int time) {
-				
+		
 		synchronized(eventMap) {
 			
 			if (!eventMap.containsKey(event)) {

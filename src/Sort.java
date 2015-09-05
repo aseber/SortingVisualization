@@ -11,7 +11,7 @@ public abstract class Sort implements Runnable {
 		QUICK ("Quick Sort") {Sort sort(ElementArray array) {return new SortQuick(array);}},
 		BUBBLE ("Bubble Sort") {Sort sort(ElementArray array) {return new SortBubble(array);}},
 		SHAKER ("Shaker Sort") {Sort sort(ElementArray array) {return new SortShaker(array);}},
-		//BITONIC ("Bitonic Sort"),
+		BITONIC ("Bitonic Sort") {Sort sort(ElementArray array) {return new SortBitonic(array);}},
 		//STDSORT ("std::sort"),
 		//RADIXLSD ("Radix LSD Sort"),
 		//RADIXMSD ("Radix MSD Sort"),

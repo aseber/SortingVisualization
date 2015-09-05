@@ -49,7 +49,6 @@ public class Element {
 			g.clearRect(x, topOffset, deltaX, (int) reduced_height);
 			g.setColor(color);
 			g.fillRect(x, y, deltaX, deltaY);
-			VisualizationBase.VISUALIZATION_WINDOW.repaint();
 			
 		}
 		

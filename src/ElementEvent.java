@@ -1,16 +1,13 @@
 import java.awt.Color;
-import java.awt.Graphics;
 
 public class ElementEvent implements Runnable { // class that executes the region flashing thing
 	
 	private Element element = null;
-	private Graphics g = null;
 	private Color color = null;
 	
-	public ElementEvent(Element inputElement, Graphics inputG, Color inputColor) {
+	public ElementEvent(Element inputElement, Color inputColor) {
 		
 		element = inputElement;
-		g = inputG;
 		color = inputColor;
 		
 	}
@@ -18,7 +15,7 @@ public class ElementEvent implements Runnable { // class that executes the regio
 	public void drawBeginning() {
 		
 		element.setColor(color);
-		element.drawElement(g);
+		//element.drawElement(g);
 		VisualizationBase.VISUALIZATION_WINDOW.repaint(element);
 		
 	}
@@ -26,7 +23,6 @@ public class ElementEvent implements Runnable { // class that executes the regio
 	private void drawEnd() {
 		
 		element.setColor(Color.WHITE);
-		element.drawElement(g);
 		VisualizationBase.VISUALIZATION_WINDOW.repaint(element);
 		
 	}
@@ -53,7 +49,7 @@ public class ElementEvent implements Runnable { // class that executes the regio
 	@Override
 	public int hashCode() {
 		
-		return element.getIndex();
+		return element.getValue();
 		
 	}
 	

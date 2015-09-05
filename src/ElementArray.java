@@ -297,7 +297,7 @@ public class ElementArray {
 			
 		}
 		
-		if (VisualizationBase.DRAW_SCREEN_UPDATES_WHILE_SORTING) {
+		else if (VisualizationBase.DRAW_SCREEN_UPDATES_WHILE_SORTING) {
 			
 			VisualizationBase.VISUALIZATION_WINDOW.repaint(E1);
 			
