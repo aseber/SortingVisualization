@@ -25,7 +25,6 @@ public class SortShell extends Sort {
 						
 						array.set(j, array.get(j - gapSize));
 						checkWait();
-						drawCounterUpdates();
 						
 					}
 					

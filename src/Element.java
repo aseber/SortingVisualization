@@ -34,7 +34,7 @@ public class Element {
 		if (drawable) {
 		
 			int topOffset = 20;
-			int bottomOffset = 20;
+			int bottomOffset = 0;
 			
 			double width = VisualizationBase.WINDOW_SIZE.getWidth();
 			double total_height = VisualizationBase.WINDOW_SIZE.getHeight();
@@ -42,7 +42,7 @@ public class Element {
 			double count_double = (double) VisualizationBase.SORT_COUNT;
 			
 			int x = (int) Math.round(width * ((double) index / (count_double)));
-			int y = ((int) total_height - topOffset) - (int) Math.round(reduced_height * ((double) value / count_double));
+			int y = ((int) total_height - bottomOffset) - (int) Math.round(reduced_height * ((double) value / count_double));
 			int deltaX = (int) Math.round(width / count_double) + 1;
 			int deltaY = (int) total_height - y - bottomOffset;
 			

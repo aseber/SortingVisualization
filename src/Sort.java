@@ -91,20 +91,6 @@ public abstract class Sort implements Runnable {
 		
 	}
 	
-	protected final void drawCounterUpdates() {
-		
-		if (VisualizationBase.DRAW_SCREEN_UPDATES_WHILE_SORTING) {
-		
-			VisualizationBase.VISUALIZATION_GUI.setAccessCounter(array.counter.getAccesses());
-			VisualizationBase.VISUALIZATION_GUI.setCompareCounter(array.counter.getCompares());
-			VisualizationBase.VISUALIZATION_GUI.setSetCounter(array.counter.getSets());
-			long intermiediate_time = System.currentTimeMillis();
-			VisualizationBase.VISUALIZATION_GUI.setRunTimeCounter(intermiediate_time - start_time);
-			
-		}
-		
-	}
-	
 	public final void pause() {
 		
 		paused = true;

@@ -38,7 +38,6 @@ public class SortQuick extends Sort {
 		while (true) {
 			
 			checkWait();
-			drawCounterUpdates();
 			
 			j--;
 			

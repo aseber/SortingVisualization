@@ -174,10 +174,26 @@ public class VisualizationGUI extends JFrame {
 		add(mainWindow, CC.xywh(1, 2, 3, 1, CC.FILL, CC.FILL));
 		runButton.setFocusable(false);
 		add(runButton, CC.xywh(2, 4, 1, 1, CC.FILL, CC.FILL));
+		runButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+				runButtonAction();
+				
+			}
+			
+		});
 		pack();
 		
 		Dimension size = new Dimension(VisualizationBase.WINDOW_SIZE.width + 17, VisualizationBase.WINDOW_SIZE.height + 94);
 		setSize(size);
+		
+	}
+	
+	private void runButtonAction() {
+		
+		VisualizationBase.VISUALIZATION_WINDOW.runSort();
 		
 	}
 	

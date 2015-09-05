@@ -148,7 +148,7 @@ public class ElementArray {
 
 		else if (order == ElementArray.orders.RANDOM) { // Randomize by taking the forward array and doing 10*size random swaps
 			
-			int RANDOMIZE_COUNTER = size * 10;
+			int RANDOMIZE_COUNTER = size * 3;
 			Random random = new Random();
 			
 			for (int i = 0; i < RANDOMIZE_COUNTER; i++) {

@@ -1,23 +1,69 @@
-public class SortExecutor { // Simple class that allows me to move the processing to a new thread so the UI doesn't lag.
+public class SortExecutor implements Runnable { // Simple class that allows me to move the processing to a new thread so the UI doesn't lag.
 													// Also lets me test the algorithms speed
 	private Sort sort;
 	private Thread sortingThread;
+	private long start_time;
 	
-	public void run(ElementArray inputArray, Sort.algorithms sortingAlgorithm) {
+	@Override
+	public void run() {
 
-		if (sort != null) {
-			
-			if (sort.isRunning()) {
-			
-				if (!sort.isPaused()) {
+		synchronized (this) {
+		
+			while (true) {
 				
-					sort.pause();
+				if (isSorting()) {
 				
+					VisualizationBase.VISUALIZATION_GUI.setAccessCounter(sort.array.counter.getAccesses());
+					VisualizationBase.VISUALIZATION_GUI.setCompareCounter(sort.array.counter.getCompares());
+					VisualizationBase.VISUALIZATION_GUI.setSetCounter(sort.array.counter.getSets());
+					long intermiediate_time = System.currentTimeMillis();
+					VisualizationBase.VISUALIZATION_GUI.setRunTimeCounter(intermiediate_time - start_time);
+					
+				}
+
+				try {
+					
+					wait(100); // So we could write a method in Sort to lock this thread until running is true, but I don't feel like writing it lol
+								// So the result is to poll this method every 100 ms and check if it is sorting and just set it every 'tick'
+				
+				} catch (InterruptedException e) {}
+				
+			}
+			
+		}
+		
+	}
+	
+	public void runSort(ElementArray inputArray, Sort.algorithms sortingAlgorithm) {
+
+		synchronized (this) {
+		
+			if (sort != null) {
+				
+				if (sort.isRunning()) {
+				
+					if (!sort.isPaused()) {
+					
+						sort.pause();
+					
+					}
+					
+					else {
+						
+						sort.unpause();
+						
+					}
+					
 				}
 				
 				else {
 					
-					sort.unpause();
+					inputArray.counter.resetCounters();
+					sort = VisualizationBase.CURRENT_ALGORITHM.sort(inputArray);
+					start_time = System.currentTimeMillis();
+					sortingThread = new Thread(sort);
+					sortingThread.start();
+					this.notify();
 					
 				}
 				
@@ -25,27 +71,20 @@ public class SortExecutor { // Simple class that allows me to move the processin
 			
 			else {
 				
-				inputArray.counter.resetCounters();
 				sort = VisualizationBase.CURRENT_ALGORITHM.sort(inputArray);
+				start_time = System.currentTimeMillis();
 				sortingThread = new Thread(sort);
 				sortingThread.start();
+				this.notify();
 				
 			}
-			
-		}
-		
-		else {
-			
-			sort = VisualizationBase.CURRENT_ALGORITHM.sort(inputArray);
-			sortingThread = new Thread(sort);
-			sortingThread.start();
 			
 		}
 		
 	}
 	
 	@SuppressWarnings("deprecation")
-	public void stop() {
+	public void stopSort() {
 		
 		if (sort != null) {
 			
@@ -63,7 +102,7 @@ public class SortExecutor { // Simple class that allows me to move the processin
 			return sort.isRunning();
 			
 		}
-	
+		
 		return false;
 		
 	}

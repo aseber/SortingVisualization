@@ -42,7 +42,6 @@ public class SortBitonic extends Sort {
 		for (int i = low; i < middle; i++) {
 			
 			checkWait();
-			drawCounterUpdates();
 			
 			if (array.compare(i, high - i) > 0 == direction) {
 				

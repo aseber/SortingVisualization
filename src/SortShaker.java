@@ -22,7 +22,6 @@ public class SortShaker extends Sort {
 				for (i = 0; i < array.size() - 2; i++) {
 					
 					checkWait();
-					drawCounterUpdates();
 					
 					if (array.compare(i, i + 1) > 0) {
 						
@@ -42,7 +41,6 @@ public class SortShaker extends Sort {
 				for (i = array.size() - 2; i >= 0; i--) {
 					
 					checkWait();
-					drawCounterUpdates();
 					
 					if (array.compare(i, i + 1) > 0) {
 						

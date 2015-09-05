@@ -22,7 +22,6 @@ public class SortInsertion extends Sort {
 					
 					array.set(j + 1, array.get(j));
 					checkWait();
-					drawCounterUpdates();
 					
 				}
 				

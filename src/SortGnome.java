@@ -17,7 +17,6 @@ public class SortGnome extends Sort {
 			while (pos < array.size()) {
 				
 				checkWait();
-				drawCounterUpdates();
 				
 				if (array.compare(pos, pos - 1) > 0) {
 					

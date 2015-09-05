@@ -19,7 +19,6 @@ public class SortSelection extends Sort {
 				
 				iMin = j;
 				checkWait();
-				drawCounterUpdates();
 				
 				for (i = j + 1; i < array.size(); i++) {
 					

@@ -16,7 +16,6 @@ public class SortBogo extends Sort {
 			while (!isInOrder()) {
 		
 				checkWait();
-				drawCounterUpdates();
 				
 				shuffle();
 				

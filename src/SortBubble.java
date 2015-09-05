@@ -21,7 +21,6 @@ public class SortBubble extends Sort {
 				for (i = 1; i < array.size() - 1; i++) {
 					
 					checkWait();
-					drawCounterUpdates();
 					
 					if (array.compare(i - 1, i) > 0) {
 						

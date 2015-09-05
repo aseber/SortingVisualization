@@ -39,7 +39,6 @@ public class SortMerge extends Sort{
 		while (i <= newMid && j <= high) {
 			
 			checkWait();
-			drawCounterUpdates();
 			
 			if (array.compare(i, j) > 0) {
 				

@@ -139,8 +139,13 @@ public class WindowDialog extends JDialog {
 		
 		Dimension newSize = new Dimension(Integer.parseInt(windowXSizeField.getText()), Integer.parseInt(windowYSizeField.getText()));
 
-		VisualizationBase.WINDOW_SIZE.setSize(newSize);
-		VisualizationBase.VISUALIZATION_WINDOW.setWindowSize(VisualizationBase.WINDOW_SIZE);
+		if (newSize.width != VisualizationBase.WINDOW_SIZE.width || newSize.height != VisualizationBase.WINDOW_SIZE.height) {
+		
+			VisualizationBase.WINDOW_SIZE.setSize(newSize);
+			VisualizationBase.VISUALIZATION_WINDOW.setWindowSize(VisualizationBase.WINDOW_SIZE);
+			
+		}
+		
 		VisualizationBase.DRAW_GET_UPDATES = drawGets.isSelected();
 		VisualizationBase.DRAW_SET_UPDATES = drawSets.isSelected();
 		VisualizationBase.DRAW_COMPARE_UPDATES = drawCompares.isSelected();
