@@ -6,9 +6,9 @@ This program visualizes common sorting algorithms while allowing the user to set
 
 ## Videos
 I have posted a few videos representing my program on YouTube:
-[Quick Sort 10k Elements](https://www.youtube.com/watch?v=3dqo5ZBVZ1c)
-[Quick Sort 1M Elements](https://www.youtube.com/watch?v=G1U2EJRNTwU)
-[Merge Sort 10k Elements](https://www.youtube.com/watch?v=SC2t75q_gmo)
+* [Quick Sort 10k Elements](https://www.youtube.com/watch?v=3dqo5ZBVZ1c)
+* [Quick Sort 1M Elements](https://www.youtube.com/watch?v=G1U2EJRNTwU)
+* [Merge Sort 10k Elements](https://www.youtube.com/watch?v=SC2t75q_gmo)
 
 **In order to compile this program, you will need to include the libraries in the /libs/ folder**
 
