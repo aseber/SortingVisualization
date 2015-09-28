@@ -2,6 +2,8 @@
 
 This program visualizes common sorting algorithms while allowing the user to set specific data conditions
 
+![](http://imgur.com/3zxTJZ2.png)
+
 **In order to compile this program, you will need to include the libraries in the /libs/ folder**
 
 ## Algorithms represented:
@@ -15,6 +17,15 @@ This program visualizes common sorting algorithms while allowing the user to set
 * Shell Sort
 * Quick Sort
 
+### Quick Sort - 10,000 Elements
+![](http://imgur.com/E9XXa6v.png)
+
+### Merge Sort - 10,000 Elements
+![](http://imgur.com/9FkPvp1.png)
+
+### Bubble Sort - 10,000 Elements
+![](http://imgur.com/EQi2nmg.png)
+
 ## Data sets represented:
 * Direction
   * Forward - Data is generated in sorted order
@@ -26,6 +37,15 @@ This program visualizes common sorting algorithms while allowing the user to set
 * Uniqueness
   * All Unique - All data points are unique
   * Few Unique - All data points are modified to fall in a range of four values, no values are unique, each of the four values should be equally represented
+
+### A forward, random and unique data set. Note that randomness makes forward and reverse effectively indistinguishable
+![](http://imgur.com/5j5jOlg.png)
+
+### A reverse, almost sorted, unique data set.
+![](http://imgur.com/c19lspD.png)
+
+### A forward, random, few unique data set.
+![](http://imgur.com/Gn46g2I.png)
 
 ## Controls
 * Spacebar - Starts the simulation with the currently selected algorithm and data set
