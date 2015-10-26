@@ -2,6 +2,7 @@
 
 This program visualizes common sorting algorithms while allowing the user to set specific data conditions
 
+![](http://i.imgur.com/8PM23RZ.gif)
 ![](http://imgur.com/3zxTJZ2.png)
 
 ## Videos
