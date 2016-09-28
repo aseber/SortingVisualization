@@ -1,3 +1,8 @@
+import ElementSystem.ElementArray;
+import GUI.VisualizationGUI;
+import GUI.VisualizationWindow;
+import SortStrategies.Sort;
+
 import java.awt.Dimension;
 
 import javax.swing.JFrame;
